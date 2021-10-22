@@ -1,8 +1,13 @@
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: "class", // or 'media' or 'class' 00c805
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        green: "#00c805",
+        red: "#ff5000",
+      },
+    },
   },
   variants: {
     extend: {},

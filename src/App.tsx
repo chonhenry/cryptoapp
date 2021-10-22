@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 
 function App() {
-  return <div className="app">app</div>;
+  return <div className="">app</div>;
 }
 
 export default App;

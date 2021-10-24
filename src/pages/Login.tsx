@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [formData, setFormDate] = useState({ email: "", password: "" });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,7 +56,7 @@ const Login: React.FC = () => {
           </button>
           <Link
             className="inline-block align-baseline font-bold text-sm text-green_base hover:text-green_hover"
-            to=""
+            to="/signup"
           >
             Don't have an account?
           </Link>

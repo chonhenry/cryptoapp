@@ -3,6 +3,7 @@ import "./App.css";
 import { useDarkMode, toggleTheme } from "./hook/useDarkMode";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import LoginB from "./pages/LoginB";
 
 // interface TestInterface {
@@ -17,7 +18,12 @@ function App() {
     <Router>
       <div className="flex justify-center items-center min-h-screen ">
         <Switch>
-          <Route path="/login" render={(props) => <Login />}></Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
         </Switch>
       </div>
     </Router>

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import LoginB from "./pages/LoginB";
+import Navbar from "./components/Navbar";
 
 // interface TestInterface {
 //   value: number;
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <Router>
-      <div className="justify-center items-center min-h-screen ">
+      <div className=" justify-center items-center min-h-screen ">
         <Switch>
           <Route path="/login">
             <Login />
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
+          <Navbar />
         </Switch>
       </div>
     </Router>

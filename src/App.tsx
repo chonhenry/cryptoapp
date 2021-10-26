@@ -16,7 +16,7 @@ function App() {
 
   return (
     <Router>
-      <div className="flex justify-center items-center min-h-screen ">
+      <div className="justify-center items-center min-h-screen ">
         <Switch>
           <Route path="/login">
             <Login />

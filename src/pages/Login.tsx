@@ -15,10 +15,10 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="flex justify-center items-center min-h-screen">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="w-full max-w-xs h-3/6 py-6 border-gray-50 rounded"
+        className="w-full max-w-xs h-3/6 border-gray-50 rounded"
       >
         <div className="text-center text-2xl mb-3">Welcome</div>
         <div className="mb-3">
@@ -60,16 +60,14 @@ const Login: React.FC = () => {
           >
             Don't have an account?
           </Link>
+          <button
+            className="bg-green_hover text-white font-bold text-xs py-2 px-8 mt-8 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+          >
+            Demo Sign In
+          </button>
         </div>
       </form>
-      <div className="text-center">
-        <button
-          className="bg-green_hover text-white font-bold text-xs py-2 px-8 rounded focus:outline-none focus:shadow-outline"
-          type="button"
-        >
-          Demo Sign In
-        </button>
-      </div>
     </div>
   );
 };

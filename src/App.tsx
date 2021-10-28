@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { useDarkMode, toggleTheme } from "./hook/useDarkMode";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <Router>
-      <div className=" justify-center items-center min-h-screen ">
+      <div className=" justify-center items-center min-h-screen dark:bg-black">
         <Switch>
           <Route path="/login">
             <Login />

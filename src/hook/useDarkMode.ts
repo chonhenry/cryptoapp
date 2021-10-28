@@ -5,6 +5,8 @@ enum Theme {
   LIGHT = "light",
 }
 
+type theme = "light" | "dark";
+
 export function useDarkMode() {
   useEffect(() => {
     const root = window.document.documentElement;
@@ -20,11 +22,13 @@ export function useDarkMode() {
   }, []);
 }
 
-export function toggleTheme() {
-  let theme = localStorage.getItem("theme");
+export function toggleTheme(theme: theme) {
+  let currentTheme = localStorage.getItem("theme");
   const root = window.document.documentElement;
 
-  if (theme === Theme.DARK) {
+  if (theme === currentTheme) return;
+
+  if (theme === Theme.LIGHT) {
     root.classList.remove(Theme.DARK);
     localStorage.setItem("theme", Theme.LIGHT);
   } else {

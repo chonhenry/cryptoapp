@@ -7,11 +7,6 @@ import Signup from "./pages/Signup";
 import LoginB from "./pages/LoginB";
 import Navbar from "./components/Navbar";
 
-// interface TestInterface {
-//   value: number;
-//   match?: any;
-// }
-
 function App() {
   useDarkMode();
 
@@ -33,9 +28,3 @@ function App() {
 }
 
 export default App;
-
-/* <div className="bg-blue-100 dark:bg-blue-800 w-screen h-screen">
-      <div className="text-green">green</div>
-      <div className="text-red">red</div>
-      <button onClick={toggleTheme}>toggle theme</button>
-</div> */

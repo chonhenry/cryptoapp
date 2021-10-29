@@ -9,7 +9,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <nav className="w-full h-16 flex items-center justify-center fixed">
+    <nav className="w-full h-16 flex items-center justify-center sticky top-0">
       <ul className="w-full flex justify-between items-center max-w-5xl relative">
         <li className="text-">
           <Link to="/">
@@ -37,7 +37,7 @@ const Navbar = () => {
         </li>
 
         {dropdownOpen && (
-          <div className="absolute right-0 top-8 py-4 rounded-md w-32 border border-gray-200 dark:border-gray-500 dark:bg-gray-800 flex justify-center">
+          <div className="absolute right-0 top-8 py-4 rounded-md w-32 border border-gray-200 bg-white dark:border-gray-500 dark:bg-gray-800 flex justify-center">
             <div className="">
               <button
                 className=" w-10 h-10 rounded-tl-md rounded-bl-md bg-opacity-10 text-green_base border border-green_base bg-green_base dark:text-white"

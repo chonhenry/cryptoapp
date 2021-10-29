@@ -4,15 +4,15 @@ import { useDarkMode, toggleTheme } from "./hook/useDarkMode";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import LoginB from "./pages/LoginB";
 import Navbar from "./components/Navbar";
+import Main from "./pages/Main";
 
 function App() {
   useDarkMode();
 
   return (
     <Router>
-      <div className=" justify-center items-center min-h-screen dark:bg-black">
+      <div className="min-h-screen dark:bg-black">
         <Switch>
           <Route path="/login">
             <Login />
@@ -20,7 +20,14 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
-          <Navbar />
+        </Switch>
+
+        <Navbar />
+
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
         </Switch>
       </div>
     </Router>

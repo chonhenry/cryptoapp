@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
+import Cryptocurrency from "./pages/Cryptocurrency";
 
 function App() {
   useDarkMode();
@@ -27,6 +28,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Main />
+          </Route>
+          <Route exact path="/:cryptoId">
+            <Cryptocurrency />
           </Route>
         </Switch>
       </div>

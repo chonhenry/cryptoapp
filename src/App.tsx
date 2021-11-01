@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { useDarkMode, toggleTheme } from "./hook/useDarkMode";
+import { useDarkMode } from "./hook/useDarkMode";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";

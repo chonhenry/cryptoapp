@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toggleTheme } from "../hook/useDarkMode";
-import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (

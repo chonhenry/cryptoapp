@@ -23,6 +23,16 @@ export interface CryptoHistory {
   timestamp: number;
 }
 
+export interface Timerange {
+  "1D": string;
+  "1W": string;
+  "1M": string;
+  "1Y": string;
+  "5Y": string;
+}
+
+export type TimerangeType = keyof Timerange;
+
 export const getCryptos = async (): Promise<Crypto[]> => {
   try {
     const res = await axios.get("https://coinranking1.p.rapidapi.com/coins", {
@@ -59,12 +69,20 @@ export const getCrypto = async (coinId: number): Promise<Crypto> => {
 };
 
 export const getCryptoHistory = async (
-  coinId: number
+  coinId: number,
+  t: TimerangeType = "1D"
 ): Promise<CryptoHistory[]> => {
-  // 3h 24h 7d 30d 3m 1y 3y 5y
   try {
+    const timerange: Timerange = {
+      "1D": "24h",
+      "1W": "7d",
+      "1M": "30d",
+      "1Y": "1y",
+      "5Y": "5y",
+    };
+
     const res = await axios.get(
-      `https://coinranking1.p.rapidapi.com/coin/${coinId}/history/24h`,
+      `https://coinranking1.p.rapidapi.com/coin/${coinId}/history/${timerange[t]}`,
       {
         headers: {
           "x-rapidapi-host": "coinranking1.p.rapidapi.com",
@@ -74,7 +92,6 @@ export const getCryptoHistory = async (
     );
 
     const data = res.data.data.history;
-    // console.log(data);
     return data;
   } catch (error: any) {
     throw error;

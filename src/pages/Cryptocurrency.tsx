@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Crypto, getCrypto } from "../API/api";
 import ChartSection from "../components/ChartSection";
+import CryptoDetails from "../components/CryptoDetails";
 
 interface CryptoId {
   cryptoId: string;
@@ -43,8 +44,12 @@ const Cryptocurrency: React.FC = () => {
   return (
     <div className="max-w-5xl mt-6 m-auto flex justify-between">
       <div className="w-8/12 mr-8">
-        {/* <ChartSection crypto={crypto} cryptoHistory={cryptoHistory} /> */}
-        {crypto && <ChartSection crypto={crypto} />}
+        {crypto && (
+          <>
+            <ChartSection crypto={crypto} />
+            <CryptoDetails crypto={crypto} />
+          </>
+        )}
       </div>
 
       <div className="bg-gray-500 w-4/12">svsdfv</div>

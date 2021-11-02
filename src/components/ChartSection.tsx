@@ -71,7 +71,7 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
       const data = await getCryptoHistory(id, time);
 
       setCryptoHistory(data);
-      console.log(data);
+      // console.log(data);
 
       let prices: string[] = [];
       let timestamps: string[] = [];
@@ -126,7 +126,7 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
   };
 
   return (
-    <div>
+    <div className="mb-10">
       {crypto && cryptoHistory?.length > 0 ? (
         <>
           <div className="dark:text-white">

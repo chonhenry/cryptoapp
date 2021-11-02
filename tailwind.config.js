@@ -8,6 +8,9 @@ module.exports = {
         green_hover: "rgba(0,180,5,1)",
         red_base: "#ff5000",
       },
+      height: {
+        18: "4.5rem",
+      },
     },
   },
   variants: {

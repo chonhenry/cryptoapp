@@ -46,9 +46,9 @@ const CryptoDetails: React.FC<Props> = ({ crypto }) => {
 
   return (
     <div className="">
-      <div className="text-xl">About</div>
-      <div className="h-0.5 bg-gray-300 my-3"></div>
-      <div className="coin_desc ">
+      <div className="text-xl dark:text-white">About</div>
+      <div className="h-0.5 bg-gray-300 dark:bg-gray-800 my-3"></div>
+      <div className="coin_desc dark:text-white">
         {description}
         {canExpand && (
           <div

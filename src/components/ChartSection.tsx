@@ -5,7 +5,7 @@ import {
   getCryptoHistory,
   Timerange,
   TimerangeType,
-} from "../API/api";
+} from "../API/CryptoApi";
 import { Line } from "react-chartjs-2";
 
 interface Props {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import HTMLReactParser from "html-react-parser";
-import { Crypto } from "../API/api";
+import { Crypto } from "../API/CryptoApi";
 
 interface Props {
   crypto: Crypto;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Crypto, getCrypto } from "../API/api";
+import { Crypto, getCrypto } from "../API/CryptoApi";
 import ChartSection from "../components/ChartSection";
 import CryptoDetails from "../components/CryptoDetails";
 

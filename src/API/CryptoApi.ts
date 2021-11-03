@@ -97,3 +97,4 @@ export const getCryptoHistory = async (
     throw error;
   }
 };
+

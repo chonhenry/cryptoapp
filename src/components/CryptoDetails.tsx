@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import HTMLReactParser from "html-react-parser";
 import { Crypto } from "../API/CryptoApi";
+import { CryptoNews } from "../API/CryptoNewsApi";
 
 interface Props {
   crypto: Crypto;
+  news: CryptoNews[];
 }
 
 enum Expand {
@@ -11,7 +13,7 @@ enum Expand {
   FALSE = "See More",
 }
 
-const CryptoDetails: React.FC<Props> = ({ crypto }) => {
+const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
   const [description, setDescription] = useState<
     string | JSX.Element | JSX.Element[]
   >("");
@@ -22,7 +24,7 @@ const CryptoDetails: React.FC<Props> = ({ crypto }) => {
 
   useEffect(() => {
     if (parsedHtml instanceof Array) {
-      console.log(parsedHtml[0]);
+      // console.log(parsedHtml[0]);
       setDescription(parsedHtml[0]);
       if (parsedHtml.length > 1) {
         setCanExpand(true);

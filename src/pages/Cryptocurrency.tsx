@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Crypto, getCrypto } from "../API/CryptoApi";
+import { getCryptoNews, CryptoNews } from "../API/CryptoNewsApi";
 import ChartSection from "../components/ChartSection";
 import CryptoDetails from "../components/CryptoDetails";
 
@@ -12,6 +13,7 @@ const Cryptocurrency: React.FC = () => {
   const { cryptoId } = useParams<CryptoId>();
 
   const [crypto, setCrypto] = useState<Crypto>();
+  const [news, setNews] = useState<CryptoNews[]>([]);
   // const [cryptoHistory, setCryptoHistory] = useState<CryptoHistory[]>([]);
   // const [error, setError] = useState(false);
   // const [loading, setLoading] = useState(true);
@@ -24,17 +26,18 @@ const Cryptocurrency: React.FC = () => {
     } catch (error) {}
   };
 
-  const fetchCryptoHistory = async (id: number) => {
-    // try {
-    //   const data = await getCryptoHistory(id);
-    //   setCryptoHistory(data);
-    // } catch (error) {}
+  const fetchCryptoNews = async () => {
+    try {
+      const news = await getCryptoNews();
+      console.log(news);
+      setNews(news);
+    } catch (error) {}
   };
 
   useEffect(() => {
     const getData = async () => {
       await fetchCrypto(parseInt(cryptoId));
-      await fetchCryptoHistory(parseInt(cryptoId));
+      await fetchCryptoNews();
       // setLoading(false);
     };
 
@@ -47,7 +50,11 @@ const Cryptocurrency: React.FC = () => {
         {crypto && (
           <>
             <ChartSection crypto={crypto} />
-            <CryptoDetails crypto={crypto} />
+          </>
+        )}
+        {crypto && (
+          <>
+            <CryptoDetails crypto={crypto} news={news} />
           </>
         )}
       </div>

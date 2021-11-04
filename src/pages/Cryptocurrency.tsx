@@ -22,7 +22,7 @@ const Cryptocurrency: React.FC = () => {
     try {
       const data = await getCrypto(id);
       setCrypto(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {}
   };
 

@@ -1,10 +1,14 @@
 import axios from "axios";
 
 export interface CryptoNews {
-  headline: string;
-  content: string;
+  headline: {
+    main: string;
+  };
+  snippet: string;
   web_url: string;
   img: string;
+  _id: string;
+  multimedia: { url: string }[];
 }
 
 export const getCryptoNews = async (): Promise<CryptoNews[]> => {

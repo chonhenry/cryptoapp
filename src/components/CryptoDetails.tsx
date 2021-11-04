@@ -3,6 +3,7 @@ import HTMLReactParser from "html-react-parser";
 import millify from "millify";
 import { Crypto } from "../API/CryptoApi";
 import { CryptoNews } from "../API/CryptoNewsApi";
+import News from "./News";
 
 interface Props {
   crypto: Crypto;
@@ -49,7 +50,7 @@ const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
 
   const statsCard = (title: string, value: string | Date) => {
     return (
-      <div className="">
+      <div className="dark:text-white">
         <div className="font-bold">{title}</div>
         <div className="">{value}</div>
       </div>
@@ -80,13 +81,19 @@ const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
         {statsCard("Volume", millify(crypto.volume))}
         {statsCard(
           "All Time High",
-          `${millify(parseInt(crypto.allTimeHigh.price))} at ${new Date(
+          `$${millify(parseInt(crypto.allTimeHigh.price))} at ${new Date(
             crypto.allTimeHigh.timestamp
           ).toLocaleDateString()}`
         )}
       </div>
 
-      {/* <div className="text-xl dark:text-white">News</div> */}
+      <div className="text-xl dark:text-white">News</div>
+      <div className="h-0.5 bg-gray-300 dark:bg-gray-800 my-3" />
+      <div className="">
+        {news.map((n) => {
+          return <News key={n._id} news={n} />;
+        })}
+      </div>
     </div>
   );
 };

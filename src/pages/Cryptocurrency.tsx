@@ -22,14 +22,14 @@ const Cryptocurrency: React.FC = () => {
     try {
       const data = await getCrypto(id);
       setCrypto(data);
-      // console.log(data);
+      console.log(data);
     } catch (error) {}
   };
 
   const fetchCryptoNews = async () => {
     try {
       const news = await getCryptoNews();
-      console.log(news);
+      // console.log(news);
       setNews(news);
     } catch (error) {}
   };
@@ -45,7 +45,7 @@ const Cryptocurrency: React.FC = () => {
   }, []);
 
   return (
-    <div className="max-w-5xl mt-6 m-auto flex justify-between">
+    <div className="max-w-5xl mt-6 m-auto flex justify-between pb-32">
       <div className="w-8/12 mr-8">
         {crypto && (
           <>

@@ -16,6 +16,11 @@ export interface Crypto {
   marketCap: number;
   price: string;
   rank: number;
+  totalSupply: number;
+  allTimeHigh: {
+    price: string;
+    timestamp: number;
+  };
 }
 
 export interface CryptoHistory {
@@ -97,4 +102,3 @@ export const getCryptoHistory = async (
     throw error;
   }
 };
-

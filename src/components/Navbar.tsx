@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <nav className="w-full h-16 flex items-center justify-center sticky top-0">
+    <nav className="w-full h-16 flex items-center justify-center sticky top-0 bg-white dark:bg-black">
       <ul className="w-full flex justify-between items-center max-w-5xl relative">
         <li className="text-">
           <Link to="/">

@@ -28,6 +28,7 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
         label: "Price",
         data: prices,
         fill: false,
+        borderWidth: 2,
         borderColor: isProfit ? "rgb(0,200,5)" : "#ff5000",
         tension: 0.1,
         pointBorderColor: "rgba(0, 0, 0, 0)",

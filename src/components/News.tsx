@@ -9,7 +9,7 @@ const News: React.FC<Props> = ({ news }) => {
   console.log(news);
   return (
     <a
-      className=" w-full  py-5 flex text-sm"
+      className=" w-full p-3 flex text-sm hover:bg-gray-200 dark:hover:bg-gray-800"
       href={news.web_url}
       target="_blank"
       rel="noreferrer"

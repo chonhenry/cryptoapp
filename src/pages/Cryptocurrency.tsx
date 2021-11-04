@@ -26,9 +26,9 @@ const Cryptocurrency: React.FC = () => {
     } catch (error) {}
   };
 
-  const fetchCryptoNews = async () => {
+  const fetchCryptoNews = async (q: string) => {
     try {
-      const news = await getCryptoNews();
+      const news = await getCryptoNews(q);
       // console.log(news);
       setNews(news);
     } catch (error) {}
@@ -37,12 +37,24 @@ const Cryptocurrency: React.FC = () => {
   useEffect(() => {
     const getData = async () => {
       await fetchCrypto(parseInt(cryptoId));
-      await fetchCryptoNews();
-      // setLoading(false);
+
+      if (crypto) {
+        await fetchCryptoNews(crypto.name);
+      }
     };
 
     getData();
   }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      if (crypto) {
+        await fetchCryptoNews(crypto.name);
+      }
+    };
+
+    getData();
+  }, [crypto]);
 
   return (
     <div className="max-w-5xl mt-6 m-auto flex justify-between pb-32">

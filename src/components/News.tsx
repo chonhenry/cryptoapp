@@ -6,7 +6,7 @@ interface Props {
 }
 
 const News: React.FC<Props> = ({ news }) => {
-  console.log(news);
+  //   console.log(news);
   return (
     <a
       className=" w-full p-3 flex text-sm hover:bg-gray-200 dark:hover:bg-gray-800"

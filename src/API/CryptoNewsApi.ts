@@ -11,7 +11,7 @@ export interface CryptoNews {
   multimedia: { url: string }[];
 }
 
-export const getCryptoNews = async (): Promise<CryptoNews[]> => {
+export const getCryptoNews = async (query: string): Promise<CryptoNews[]> => {
   try {
     // let res = await axios.get(
     //   "https://api.nytimes.com/svc/search/v2/articlesearch.json?",
@@ -22,7 +22,7 @@ export const getCryptoNews = async (): Promise<CryptoNews[]> => {
     //   }
     // );
     let res = await axios.get(
-      `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${process.env.REACT_APP_NYTIMES_API_KEY}`
+      `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${process.env.REACT_APP_NYTIMES_API_KEY}`
     );
 
     // console.log(res.data.response.docs);

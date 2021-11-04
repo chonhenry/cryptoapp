@@ -16,6 +16,7 @@ enum Expand {
 }
 
 const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
+  console.log(news);
   const [description, setDescription] = useState<
     string | JSX.Element | JSX.Element[]
   >("");

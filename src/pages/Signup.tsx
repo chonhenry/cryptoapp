@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { registerUser } from "../firebase/FirebaseAuthService";
+import { useHistory } from "react-router-dom";
 
 const Signup: React.FC = () => {
   const [formData, setFormDate] = useState({
@@ -13,6 +14,8 @@ const Signup: React.FC = () => {
 
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
+
+  const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +31,7 @@ const Signup: React.FC = () => {
       console.log(user);
       setError("");
       setPending(false);
+      history.push("/");
     } catch (error: any) {
       setError(`* ${error.message}`);
       setPending(false);

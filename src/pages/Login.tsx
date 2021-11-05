@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { signinUser } from "../firebase/FirebaseAuthService";
+import { useHistory } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [formData, setFormDate] = useState({ email: "", password: "" });
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(false);
+
+  const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,6 +17,8 @@ const Login: React.FC = () => {
       await signinUser(formData.email, formData.password);
       setError(false);
       setPending(false);
+      history.push("/");
+      
     } catch (error: any) {
       setPending(false);
       setError(true);

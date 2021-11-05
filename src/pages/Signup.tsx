@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { registerUser } from "../firebase/FirebaseAuthService";
 
 const Signup: React.FC = () => {
   const [formData, setFormDate] = useState({
@@ -10,14 +11,27 @@ const Signup: React.FC = () => {
     confirmPassword: "",
   });
 
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(123);
     if (formData.password !== formData.confirmPassword) {
-      setError(true);
-    } else {
-      setError(false);
+      setError("* Passwords don't match");
+      return;
+    }
+
+    setPending(true);
+
+    try {
+      const user = await registerUser(formData.email, formData.password);
+      console.log(user);
+      setError("");
+      setPending(false);
+    } catch (error: any) {
+      setError(`* ${error.message}`);
+      setPending(false);
     }
   };
 
@@ -98,16 +112,17 @@ const Signup: React.FC = () => {
               required
             />
           </label>
-          {error && (
-            <div className="text-sm text-red_base">* Passwords don't match</div>
+          {error.length > 0 && (
+            <div className="text-sm text-red_base">{error}</div>
           )}
         </div>
         <div className="flex flex-col items-center justify-between">
           <button
             className="bg-green_base hover:bg-green_hover text-white font-bold text-xs py-2 px-8 rounded focus:outline-none focus:shadow-outline mb-3"
             type="submit"
+            disabled={pending}
           >
-            Sign Up
+            {!pending ? "Sign Up" : "Pleae Wait"}
           </button>
           <Link
             className="inline-block align-baseline font-bold text-sm text-green_base hover:text-green_hover"

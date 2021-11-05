@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { useDarkMode } from "./hook/useDarkMode";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -7,9 +7,14 @@ import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
 import Cryptocurrency from "./pages/Cryptocurrency";
+import { subscribeToAuthChanges } from "./firebase/FirebaseAuthService";
 
 function App() {
   useDarkMode();
+
+  useEffect(() => {
+    subscribeToAuthChanges();
+  }, []);
 
   return (
     <Router>
@@ -21,15 +26,16 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
-        </Switch>
+          {/* </Switch> */}
 
-        <Navbar />
+          <Navbar />
+          
 
-        <Switch>
+          {/* <Switch> */}
           <Route exact path="/">
             <Main />
           </Route>
-          <Route exact path="/:cryptoId">
+          <Route exact path="/crypto/:cryptoId">
             <Cryptocurrency />
           </Route>
         </Switch>

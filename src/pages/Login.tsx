@@ -1,11 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { signinUser } from "../firebase/FirebaseAuthService";
 
 const Login: React.FC = () => {
   const [formData, setFormDate] = useState({ email: "", password: "" });
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setPending(true);
+    try {
+      await signinUser(formData.email, formData.password);
+      setError(false);
+      setPending(false);
+    } catch (error: any) {
+      setPending(false);
+      setError(true);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +58,14 @@ const Login: React.FC = () => {
               required
             />
           </label>
+          {error && <div className="text-sm text-red_base">Signin failed</div>}
         </div>
         <div className="flex flex-col items-center justify-between">
           <button
             className="bg-green_base hover:bg-green_hover text-white font-bold text-xs py-2 px-8 rounded focus:outline-none focus:shadow-outline mb-3"
             type="submit"
           >
-            Sign In
+            {!pending ? "Sign In" : "Loading..."}
           </button>
           <Link
             className="inline-block align-baseline font-bold text-sm text-green_base hover:text-green_hover"

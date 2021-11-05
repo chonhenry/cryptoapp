@@ -1,8 +1,18 @@
 import { firebaseAuth as auth } from "./config";
 
 const registerUser = (email: string, password: string) => {
-  console.log("register user");
+  //   console.log("register user");
   return auth.createUserWithEmailAndPassword(email, password);
+};
+
+const signinUser = (email: string, password: string) => {
+//   console.log("signin user");
+  return auth.signInWithEmailAndPassword(email, password);
+};
+
+const signoutUser = () => {
+  //   console.log("logoutUser");
+  return auth.signOut();
 };
 
 const subscribeToAuthChanges = () => {
@@ -15,4 +25,4 @@ const subscribeToAuthChanges = () => {
   });
 };
 
-export { registerUser, subscribeToAuthChanges };
+export { registerUser, subscribeToAuthChanges, signoutUser, signinUser };

@@ -26,16 +26,15 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
-          {/* </Switch> */}
+        </Switch>
 
-          <Navbar />
-          
-
-          {/* <Switch> */}
+        <Switch>
           <Route exact path="/">
+            <Navbar />
             <Main />
           </Route>
           <Route exact path="/crypto/:cryptoId">
+            <Navbar />
             <Cryptocurrency />
           </Route>
         </Switch>

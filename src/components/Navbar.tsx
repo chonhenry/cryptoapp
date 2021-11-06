@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toggleTheme } from "../hook/useDarkMode";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
+import { signoutUser } from "../firebase/FirebaseAuthService";
 
 const Navbar: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user.user);
+  const loading = useSelector((state: RootState) => state.user.loading);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleClick = () => {
+    if (user) {
+      signoutUser();
+      setDropdownOpen(false);
+    }
+  };
 
   return (
     <nav className="w-full h-16 flex items-center justify-center sticky top-0 bg-white dark:bg-black">
@@ -36,8 +49,8 @@ const Navbar: React.FC = () => {
         </li>
 
         {dropdownOpen && (
-          <div className="absolute right-0 top-8 py-4 rounded-md w-32 border border-gray-200 bg-white dark:border-gray-500 dark:bg-gray-800 flex justify-center">
-            <div className="">
+          <div className="absolute right-0 top-8 pt-4 rounded-md w-auto border border-gray-200 bg-white dark:border-gray-500 dark:bg-gray-800 flex justify-center items-center flex-col">
+            <div className="mb-3 px-4">
               <button
                 className=" w-10 h-10 rounded-tl-md rounded-bl-md bg-opacity-10 text-green_base border border-green_base bg-green_base dark:text-white"
                 onClick={() => toggleTheme("light")}
@@ -51,6 +64,20 @@ const Navbar: React.FC = () => {
                 <i className="far fa-moon"></i>
               </button>
             </div>
+
+            <div className="mx-3 font-bold mb-3 dark:text-white max-w-xs text-center">
+              {user && user.displayName}
+            </div>
+
+            <div className="h-px w-full bg-gray-200 dark:bg-gray-500" />
+
+            <Link
+              to={user ? "/" : "/login"}
+              className="w-full text-center cursor-pointer hover:bg-gray-200 py-3 dark:text-white dark:hover:bg-gray-700"
+              onClick={handleClick}
+            >
+              {user ? "Logout" : "Log In"}
+            </Link>
           </div>
         )}
       </ul>

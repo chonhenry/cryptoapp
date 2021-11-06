@@ -6,7 +6,7 @@ const registerUser = (email: string, password: string) => {
 };
 
 const signinUser = (email: string, password: string) => {
-//   console.log("signin user");
+  //   console.log("signin user");
   return auth.signInWithEmailAndPassword(email, password);
 };
 
@@ -18,7 +18,7 @@ const signoutUser = () => {
 const subscribeToAuthChanges = () => {
   auth.onAuthStateChanged((user) => {
     if (user) {
-      console.log(user.email);
+      console.log(user);
     } else {
       console.log("no user");
     }

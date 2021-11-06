@@ -14,11 +14,11 @@ const Login: React.FC = () => {
     e.preventDefault();
     setPending(true);
     try {
-      await signinUser(formData.email, formData.password);
+      const user = await signinUser(formData.email, formData.password);
+      console.log(user);
       setError(false);
       setPending(false);
       history.push("/");
-      
     } catch (error: any) {
       setPending(false);
       setError(true);

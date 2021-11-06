@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import { useDarkMode } from "./hook/useDarkMode";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -9,7 +9,7 @@ import Main from "./pages/Main";
 import Cryptocurrency from "./pages/Cryptocurrency";
 import { subscribeToAuthChanges } from "./firebase/FirebaseAuthService";
 import { useDispatch } from "react-redux";
-import { setUser, User } from "./state/slices/userSlice";
+import { setUser } from "./state/slices/userSlice";
 
 function App() {
   useDarkMode();

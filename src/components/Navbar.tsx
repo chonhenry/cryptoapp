@@ -7,7 +7,6 @@ import { signoutUser } from "../firebase/FirebaseAuthService";
 
 const Navbar: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
-  const loading = useSelector((state: RootState) => state.user.loading);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -86,22 +85,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
-/* <Drawer
-        anchor="right"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        className="dark:bg-gray-500"
-      >
-        <div className="flex justify-center items-center m-5">
-          <button className=" w-28 h-8 rounded-tl-md rounded-bl-md bg-opacity-10 text-green_base border border-green_base bg-green_base dark:text-white">
-            <i className="far fa-sun mr-2 "></i>Light
-          </button>
-          <button
-            className="bg-gray-300 w-28 h-8 rounded-tr-md rounded-br-md"
-            onClick={toggleTheme}
-          >
-            <i className="far fa-moon mr-2"></i>Dark
-          </button>
-        </div>
-      </Drawer> */

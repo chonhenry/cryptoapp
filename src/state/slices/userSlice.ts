@@ -1,9 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import firebase from "firebase/app";
-
-// interface UserState {
-//   value: number[];
-// }
 
 export interface User {
   id: string;

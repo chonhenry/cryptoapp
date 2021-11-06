@@ -14,22 +14,17 @@ const Cryptocurrency: React.FC = () => {
 
   const [crypto, setCrypto] = useState<Crypto>();
   const [news, setNews] = useState<CryptoNews[]>([]);
-  // const [cryptoHistory, setCryptoHistory] = useState<CryptoHistory[]>([]);
-  // const [error, setError] = useState(false);
-  // const [loading, setLoading] = useState(true);
 
   const fetchCrypto = async (id: number) => {
     try {
       const data = await getCrypto(id);
       setCrypto(data);
-      // console.log(data);
     } catch (error) {}
   };
 
   const fetchCryptoNews = async (q: string) => {
     try {
       const news = await getCryptoNews(q);
-      // console.log(news);
       setNews(news);
     } catch (error) {}
   };
@@ -57,7 +52,6 @@ const Cryptocurrency: React.FC = () => {
   }, [crypto]);
 
   return (
-    // <div className="max-w-5xl mt-6 m-auto flex justify-between items-center pb-32 bg-green_base">
     <div className="w-full mt-6 m-auto pb-32  md:max-w-5xl">
       <div className="mx-7">
         {crypto && (

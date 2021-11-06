@@ -5,8 +5,8 @@ import { useHistory } from "react-router-dom";
 
 const Signup: React.FC = () => {
   const [formData, setFormDate] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
+    // lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -27,7 +27,11 @@ const Signup: React.FC = () => {
     setPending(true);
 
     try {
-      const user = await registerUser(formData.email, formData.password);
+      const user = await registerUser(
+        formData.email,
+        formData.password,
+        formData.name
+      );
       console.log(user);
       setError("");
       setPending(false);
@@ -53,18 +57,18 @@ const Signup: React.FC = () => {
         <div className="text-center text-2xl mb-3">Welcome</div>
         <div className="mb-3">
           <label className="text-sm">
-            First name
+            Your name
             <input
               type="text"
               className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
-              name="firstName"
-              value={formData.firstName}
+              name="name"
+              value={formData.name}
               onChange={(e) => handleChange(e)}
               required
             />
           </label>
         </div>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label className="text-sm">
             Last name
             <input
@@ -76,7 +80,7 @@ const Signup: React.FC = () => {
               required
             />
           </label>
-        </div>
+        </div> */}
         <div className="mb-3">
           <label className="text-sm">
             Email

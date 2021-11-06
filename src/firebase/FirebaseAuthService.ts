@@ -1,8 +1,14 @@
 import { firebaseAuth as auth } from "./config";
 
-const registerUser = (email: string, password: string) => {
+const registerUser = async (
+  email: string,
+  password: string,
+  displayName: string
+) => {
   //   console.log("register user");
-  return auth.createUserWithEmailAndPassword(email, password);
+  const res = await auth.createUserWithEmailAndPassword(email, password);
+  await res.user?.updateProfile({ displayName });
+  return res;
 };
 
 const signinUser = (email: string, password: string) => {

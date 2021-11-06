@@ -2,10 +2,10 @@ import React from "react";
 import { signoutUser } from "../firebase/FirebaseAuthService";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
-// import { add } from "../state/slices/userSlice";
 
 const Main = () => {
   const user = useSelector((state: RootState) => state.user.user);
+  const loading = useSelector((state: RootState) => state.user.loading);
 
   return (
     <div className="max-w-5xl mt-6 m-auto flex justify-between">
@@ -15,7 +15,7 @@ const Main = () => {
         <br />
         <br />
         <div className="bg-pink-300 w-full">
-          {user ? user.displayName : "no user"}
+          {loading ? "loading..." : user ? user.displayName : "no user"}
         </div>
       </div>
     </div>

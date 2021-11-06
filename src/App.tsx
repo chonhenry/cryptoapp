@@ -8,12 +8,16 @@ import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
 import Cryptocurrency from "./pages/Cryptocurrency";
 import { subscribeToAuthChanges } from "./firebase/FirebaseAuthService";
+import { useDispatch } from "react-redux";
+import { setUser, User } from "./state/slices/userSlice";
 
 function App() {
   useDarkMode();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    subscribeToAuthChanges();
+    subscribeToAuthChanges((user) => dispatch(setUser(user)));
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import { firebaseAuth as auth } from "./config";
+import { User } from "../state/slices/userSlice";
 
 const registerUser = async (
   email: string,
@@ -21,13 +22,25 @@ const signoutUser = () => {
   return auth.signOut();
 };
 
-const subscribeToAuthChanges = () => {
+const subscribeToAuthChanges = (
+  handleAuthChange: (user: User | null) => void
+) => {
   auth.onAuthStateChanged((user) => {
+    // console.log("onAuthStateChanged");
+    let stateUser: User | null = null;
+
     if (user) {
-      console.log(user);
+      console.log("user:", user);
+      stateUser = {
+        id: user.uid,
+        displayName: user.displayName!,
+        email: user.email!,
+      };
     } else {
-      console.log("no user");
+      console.log("user:", null);
     }
+
+    handleAuthChange(stateUser);
   });
 };
 

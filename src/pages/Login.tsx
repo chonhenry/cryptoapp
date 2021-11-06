@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     setPending(true);
     try {
       const user = await signinUser(formData.email, formData.password);
-      console.log(user);
+      // console.log(user);
       setError(false);
       setPending(false);
       history.push("/");

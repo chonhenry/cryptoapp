@@ -14,12 +14,12 @@ const News: React.FC<Props> = ({ news }) => {
       target="_blank"
       rel="noreferrer"
     >
-      <div className="flex-grow pr-6 ">
+      <div className="flex-grow md:pr-6 ">
         <div className="font-bold dark:text-white">{news.headline.main}</div>
         <div className="text-gray-500 ">{news.snippet}</div>
       </div>
 
-      <div className="w-56 h-32 ml-auto flex-none">
+      <div className="hidden w-56 h-32 ml-auto flex-none md:block">
         {news.multimedia.length > 0 ? (
           <img
             className="w-56 h-32 object-cover object-center "

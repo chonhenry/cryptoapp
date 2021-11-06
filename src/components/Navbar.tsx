@@ -7,8 +7,8 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="w-full h-16 flex items-center justify-center sticky top-0 bg-white dark:bg-black">
-      <ul className="w-full flex justify-between items-center max-w-5xl relative">
-        <li className="text-">
+      <ul className="w-full flex justify-center items-center max-w-5xl relative mx-7">
+        <li className="mr-auto">
           <Link to="/">
             <i
               className="fas fa-wave-square text-black dark:text-white
@@ -16,14 +16,16 @@ const Navbar: React.FC = () => {
             ></i>
           </Link>
         </li>
-        <li className="">
+
+        <li className=" w-8/12 mx-3 md:w-96 md:mx-0">
           <input
             type="text"
-            className="border rounded py-2 px-3 w-96 leading-tight bg-transparent text-black dark:text-white focus:outline-none focus:shadow-outline focus:border-green_base"
+            className="border rounded py-2 px-3 w-full leading-tight bg-transparent text-black dark:text-white focus:outline-none focus:shadow-outline focus:border-green_base"
           />
         </li>
+
         <li
-          className="cursor-pointer font-mono"
+          className="cursor-pointer font-mono ml-auto"
           onClick={() => {
             setDropdownOpen((prev) => !prev);
           }}

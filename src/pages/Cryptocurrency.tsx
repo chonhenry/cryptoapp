@@ -57,8 +57,9 @@ const Cryptocurrency: React.FC = () => {
   }, [crypto]);
 
   return (
-    <div className="max-w-5xl mt-6 m-auto flex justify-between pb-32">
-      <div className="w-8/12 mr-8">
+    // <div className="max-w-5xl mt-6 m-auto flex justify-between items-center pb-32 bg-green_base">
+    <div className="w-full mt-6 m-auto pb-32  md:max-w-5xl">
+      <div className="mx-7">
         {crypto && (
           <>
             <ChartSection crypto={crypto} />
@@ -70,8 +71,6 @@ const Cryptocurrency: React.FC = () => {
           </>
         )}
       </div>
-
-      <div className="bg-gray-500 w-4/12">svsdfv</div>
     </div>
   );
 };

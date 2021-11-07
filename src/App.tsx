@@ -10,6 +10,7 @@ import Cryptocurrency from "./pages/Cryptocurrency";
 import { subscribeToAuthChanges } from "./firebase/FirebaseAuthService";
 import { useDispatch } from "react-redux";
 import { setUser } from "./state/slices/userSlice";
+import { getCryptos } from "./state/slices/cryptosSlice";
 
 function App() {
   useDarkMode();
@@ -18,7 +19,8 @@ function App() {
 
   useEffect(() => {
     subscribeToAuthChanges((user) => dispatch(setUser(user)));
-  }, []);
+    dispatch(getCryptos());
+  }, [dispatch]);
 
   return (
     <Router>

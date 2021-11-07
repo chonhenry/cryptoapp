@@ -7,6 +7,7 @@ import { signoutUser } from "../firebase/FirebaseAuthService";
 
 const Navbar: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
+  const cryptos = useSelector((state: RootState) => state.cryptos);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -40,6 +41,7 @@ const Navbar: React.FC = () => {
           className="cursor-pointer font-mono ml-auto"
           onClick={() => {
             setDropdownOpen((prev) => !prev);
+            console.log(cryptos);
           }}
         >
           <div className="text-black dark:hover:text-green_base dark:text-white">

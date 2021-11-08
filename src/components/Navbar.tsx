@@ -1,21 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toggleTheme } from "../hook/useDarkMode";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { signoutUser } from "../firebase/FirebaseAuthService";
+import { Crypto } from "../API/CryptoApi";
+import SearchResult from "./SearchResult";
 
 const Navbar: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const cryptos = useSelector((state: RootState) => state.cryptos);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [foundCryptos, setFoundCryptos] = useState<Crypto[]>([]);
 
   const handleClick = () => {
     if (user) {
       signoutUser();
       setDropdownOpen(false);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+
+    const text = e.target.value.toLowerCase();
+    if (cryptos.list.length === 0) {
+      console.log("no cryptos");
+      return;
+    }
+
+    const cryptosList = cryptos.list;
+
+    setFoundCryptos(
+      cryptosList.filter(
+        (crypto) =>
+          crypto.name.toLowerCase().includes(text) ||
+          crypto.symbol.toLowerCase().includes(text)
+      )
+    );
   };
 
   return (
@@ -30,18 +54,32 @@ const Navbar: React.FC = () => {
           </Link>
         </li>
 
-        <li className=" w-8/12 mx-3 md:w-96 md:mx-0">
+        <li className="relative w-8/12 mx-3 md:w-96 md:mx-0">
           <input
             type="text"
-            className="border rounded py-2 px-3 w-full leading-tight bg-transparent text-black dark:text-white focus:outline-none focus:shadow-outline focus:border-green_base"
+            className="border rounded py-2 px-3 w-full leading-tight bg-transparent text-black dark:text-white focus:outline-none focus:shadow-outline"
+            onChange={(e) => handleChange(e)}
+            value={search}
           />
+          {search.length > 0 && (
+            <div className="absolute w-full border rounded">
+              {foundCryptos.map((crypto) => (
+                <SearchResult
+                  name={crypto.name}
+                  symbol={crypto.symbol}
+                  id={crypto.id}
+                  onClick={() => setSearch("")}
+                />
+              ))}
+            </div>
+          )}
         </li>
 
         <li
           className="cursor-pointer font-mono ml-auto"
           onClick={() => {
             setDropdownOpen((prev) => !prev);
-            console.log(cryptos);
+            // console.log(cryptos);
           }}
         >
           <div className="text-black dark:hover:text-green_base dark:text-white">

@@ -30,14 +30,14 @@ const subscribeToAuthChanges = (
     let stateUser: User | null = null;
 
     if (user) {
-      console.log("user:", user);
+      // console.log("user:", user);
       stateUser = {
         id: user.uid,
         displayName: user.displayName!,
         email: user.email!,
       };
     } else {
-      console.log("user:", null);
+      // console.log("user:", null);
     }
 
     handleAuthChange(stateUser);

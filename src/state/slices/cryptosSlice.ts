@@ -1,29 +1,49 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { getCryptos as fetchCryptos } from "../../API/CryptoApi";
+import { Crypto } from "../../API/CryptoApi";
+
+interface CryptosState {
+  list: Crypto[];
+  status: string;
+}
+
+const initialState: CryptosState = {
+  list: [],
+  status: "loading",
+};
 
 export const getCryptos = createAsyncThunk("cryptos/fetchCryptos", async () => {
-  console.log("fetchCryptos");
-  return fetchCryptos().then((res) => {
-    return res;
-  });
+  return fetchCryptos()
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      throw Error(error.message);
+    });
 });
 
 export const cryptoSlice = createSlice({
   name: "cryptos",
-  initialState: {
-    list: [],
-    status: null,
-  },
+  initialState,
   reducers: {},
   extraReducers: {
-    [getCryptos.pending.toString()]: (state: any, action: PayloadAction) => {
+    [getCryptos.pending.toString()]: (
+      state: CryptosState,
+      action: PayloadAction
+    ) => {
       state.status = "loading";
     },
-    [getCryptos.fulfilled.toString()]: (state: any, action: PayloadAction) => {
+    [getCryptos.fulfilled.toString()]: (
+      state: CryptosState,
+      action: PayloadAction<Crypto[]>
+    ) => {
       state.list = action.payload;
       state.status = "success";
     },
-    [getCryptos.rejected.toString()]: (state: any, action: PayloadAction) => {
+    [getCryptos.rejected.toString()]: (
+      state: CryptosState,
+      action: PayloadAction
+    ) => {
       state.status = "failed";
     },
   },

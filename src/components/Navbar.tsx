@@ -65,6 +65,7 @@ const Navbar: React.FC = () => {
             <div className="absolute w-full border rounded">
               {foundCryptos.map((crypto) => (
                 <SearchResult
+                  key={crypto.id}
                   name={crypto.name}
                   symbol={crypto.symbol}
                   id={crypto.id}
@@ -79,7 +80,6 @@ const Navbar: React.FC = () => {
           className="cursor-pointer font-mono ml-auto"
           onClick={() => {
             setDropdownOpen((prev) => !prev);
-            // console.log(cryptos);
           }}
         >
           <div className="text-black dark:hover:text-green_base dark:text-white">

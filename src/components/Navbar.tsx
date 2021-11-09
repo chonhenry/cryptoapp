@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
   const [displaySearch, setDisplaySearch] = useState(false);
   const [foundCryptos, setFoundCryptos] = useState<Crypto[]>([]);
 
-  const ref = useRef<HTMLInputElement | null>(null);
+  const ref = useRef<HTMLLIElement | null>(null);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
@@ -76,14 +76,13 @@ const Navbar: React.FC = () => {
           </Link>
         </li>
 
-        <li className="relative w-8/12 mx-3 md:w-96 md:mx-0">
+        <li className="relative w-8/12 mx-3 md:w-96 md:mx-0" ref={ref}>
           <input
             type="text"
             className="border rounded py-2 px-3 w-full leading-tight bg-transparent text-black dark:text-white focus:outline-none focus:shadow-outline"
             onChange={(e) => handleChange(e)}
             onClick={() => setDisplaySearch(true)}
             value={search}
-            ref={ref}
           />
           {search.length > 0 && displaySearch && (
             <div className="absolute w-full border rounded">

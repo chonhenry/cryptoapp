@@ -65,7 +65,7 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
 
   useEffect(() => {
     fetchCryptoHistory(crypto.id, currentTimerange);
-  }, [currentTimerange]);
+  }, [currentTimerange, crypto.id]);
 
   const fetchCryptoHistory = async (id: number, time: TimerangeType) => {
     try {

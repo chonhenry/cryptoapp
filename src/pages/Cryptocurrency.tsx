@@ -15,41 +15,44 @@ const Cryptocurrency: React.FC = () => {
   const [crypto, setCrypto] = useState<Crypto>();
   const [news, setNews] = useState<CryptoNews[]>([]);
 
-  const fetchCrypto = async (id: number) => {
+  const fetchCryptoInfo = async (id: number) => {
     try {
       const data = await getCrypto(id);
       setCrypto(data);
-    } catch (error) {}
-  };
-
-  const fetchCryptoNews = async (q: string) => {
-    try {
-      const news = await getCryptoNews(q);
+      console.log(data.name);
+      const news = await getCryptoNews(data.name);
       setNews(news);
     } catch (error) {}
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      await fetchCrypto(parseInt(cryptoId));
-
-      if (crypto) {
-        await fetchCryptoNews(crypto.name);
-      }
-    };
-
-    getData();
-  }, []);
+  // const fetchCryptoNews = async (q: string) => {
+  //   try {
+  //     const news = await getCryptoNews(q);
+  //     setNews(news);
+  //   } catch (error) {}
+  // };
 
   useEffect(() => {
     const getData = async () => {
-      if (crypto) {
-        await fetchCryptoNews(crypto.name);
-      }
+      await fetchCryptoInfo(parseInt(cryptoId));
+
+      // if (crypto) {
+      //   await fetchCryptoNews(crypto.name);
+      // }
     };
 
     getData();
-  }, [crypto]);
+  }, [cryptoId]);
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     if (crypto) {
+  //       await fetchCryptoNews(crypto.name);
+  //     }
+  //   };
+
+  //   getData();
+  // }, [crypto]);
 
   return (
     <div className="w-full mt-6 m-auto pb-32  md:max-w-5xl">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import HTMLReactParser from "html-react-parser";
 import millify from "millify";
 import { Crypto } from "../API/CryptoApi";
@@ -22,7 +22,9 @@ const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
   const [canExpand, setCanExpand] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const parsedHtml = HTMLReactParser(crypto.description);
+  const parsedHtml = useMemo(() => {
+    return HTMLReactParser(crypto.description);
+  }, [crypto.description]);
 
   useEffect(() => {
     if (parsedHtml instanceof Array) {
@@ -34,7 +36,7 @@ const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
     } else {
       setDescription(parsedHtml);
     }
-  }, []);
+  }, [parsedHtml]);
 
   const handleDescClick = () => {
     if (isExpanded) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { toggleTheme } from "../hook/useDarkMode";
 import { useSelector } from "react-redux";
@@ -13,7 +13,17 @@ const Navbar: React.FC = () => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [displaySearch, setDisplaySearch] = useState(false);
   const [foundCryptos, setFoundCryptos] = useState<Crypto[]>([]);
+
+  const ref = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   const handleClick = () => {
     if (user) {
@@ -22,12 +32,22 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const handleOutsideClick = (e: any) => {
+    if (!ref.current) return;
+
+    if (ref.current.contains(e.target)) {
+      // inside click
+      return;
+    }
+    // outside click
+    setDisplaySearch(false);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
 
     const text = e.target.value.toLowerCase();
     if (cryptos.list.length === 0) {
-      console.log("no cryptos");
       return;
     }
 
@@ -40,6 +60,8 @@ const Navbar: React.FC = () => {
           crypto.symbol.toLowerCase().includes(text)
       )
     );
+
+    if (!displaySearch) setDisplaySearch(true);
   };
 
   return (
@@ -59,9 +81,11 @@ const Navbar: React.FC = () => {
             type="text"
             className="border rounded py-2 px-3 w-full leading-tight bg-transparent text-black dark:text-white focus:outline-none focus:shadow-outline"
             onChange={(e) => handleChange(e)}
+            onClick={() => setDisplaySearch(true)}
             value={search}
+            ref={ref}
           />
-          {search.length > 0 && (
+          {search.length > 0 && displaySearch && (
             <div className="absolute w-full border rounded">
               {foundCryptos.slice(0, 10).map((crypto) => (
                 <SearchResult

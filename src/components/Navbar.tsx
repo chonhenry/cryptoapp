@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
           />
           {search.length > 0 && (
             <div className="absolute w-full border rounded">
-              {foundCryptos.map((crypto) => (
+              {foundCryptos.slice(0, 10).map((crypto) => (
                 <SearchResult
                   key={crypto.id}
                   name={crypto.name}

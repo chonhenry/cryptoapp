@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { signinUser } from "../firebase/FirebaseAuthService";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
 
 const Login: React.FC = () => {
   const [formData, setFormDate] = useState({ email: "", password: "" });
@@ -9,6 +10,11 @@ const Login: React.FC = () => {
   const [error, setError] = useState(false);
 
   const history = useHistory();
+  const user = useSelector((state: RootState) => state.user.user);
+
+  if (user) {
+    return <Redirect to="/" />;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

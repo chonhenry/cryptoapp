@@ -32,9 +32,6 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
-        </Switch>
-
-        <Switch>
           <Route exact path="/">
             <Navbar />
             <Main />

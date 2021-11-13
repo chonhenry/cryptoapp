@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
 import { registerUser } from "../firebase/FirebaseAuthService";
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
 
 const Signup: React.FC = () => {
   const [formData, setFormDate] = useState({
     name: "",
-    // lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -16,6 +16,11 @@ const Signup: React.FC = () => {
   const [pending, setPending] = useState(false);
 
   const history = useHistory();
+  const user = useSelector((state: RootState) => state.user.user);
+
+  if (user) {
+    return <Redirect to="/" />;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +37,6 @@ const Signup: React.FC = () => {
         formData.password,
         formData.name
       );
-      console.log(user);
       setError("");
       setPending(false);
       history.push("/");

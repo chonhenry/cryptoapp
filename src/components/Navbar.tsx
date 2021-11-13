@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import Dropdown from "./Dropdown";
 import { Link } from "react-router-dom";
-import { toggleTheme } from "../hook/useDarkMode";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
-import { signoutUser } from "../firebase/FirebaseAuthService";
 import { Crypto } from "../API/CryptoApi";
 import SearchResult from "./SearchResult";
 
 const Navbar: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user.user);
   const cryptos = useSelector((state: RootState) => state.cryptos);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);

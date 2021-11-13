@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { toggleTheme } from "../hook/useDarkMode";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
@@ -58,9 +58,13 @@ const Dropdown: React.FC<Props> = ({ setDropdownOpen }) => {
         </button>
       </div>
 
-      <div className="mx-3 font-bold mb-3 dark:text-white max-w-xs text-center">
-        {user && user.displayName}
-      </div>
+      {user && (
+        <>
+          <div className="mx-3 font-bold mb-3 dark:text-white max-w-xs text-center">
+            {user.displayName}
+          </div>
+        </>
+      )}
 
       <div className="h-px w-full bg-gray-200 dark:bg-gray-500" />
 

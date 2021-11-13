@@ -17,6 +17,7 @@ const Signup: React.FC = () => {
 
   const history = useHistory();
   const user = useSelector((state: RootState) => state.user.user);
+  const loading = useSelector((state: RootState) => state.user.loading);
 
   if (user) {
     return <Redirect to="/" />;
@@ -54,25 +55,26 @@ const Signup: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        className="w-full max-w-xs h-3/6 py-6 border-gray-50 rounded"
-      >
-        <div className="text-center text-2xl mb-3">Welcome</div>
-        <div className="mb-3">
-          <label className="text-sm">
-            Your name
-            <input
-              type="text"
-              className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
-              name="name"
-              value={formData.name}
-              onChange={(e) => handleChange(e)}
-              required
-            />
-          </label>
-        </div>
-        {/* <div className="mb-3">
+      {!loading && (
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="w-full max-w-xs h-3/6 py-6 border-gray-50 rounded"
+        >
+          <div className="text-center text-2xl mb-3">Welcome</div>
+          <div className="mb-3">
+            <label className="text-sm">
+              Your name
+              <input
+                type="text"
+                className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
+                name="name"
+                value={formData.name}
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </label>
+          </div>
+          {/* <div className="mb-3">
           <label className="text-sm">
             Last name
             <input
@@ -85,64 +87,65 @@ const Signup: React.FC = () => {
             />
           </label>
         </div> */}
-        <div className="mb-3">
-          <label className="text-sm">
-            Email
-            <input
-              type="email"
-              className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
-              name="email"
-              value={formData.email}
-              onChange={(e) => handleChange(e)}
-              required
-            />
-          </label>
-        </div>
-        <div className="mb-6">
-          <label className="text-sm">
-            Password
-            <input
-              type="password"
-              className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
-              name="password"
-              value={formData.password}
-              onChange={(e) => handleChange(e)}
-              required
-            />
-          </label>
-        </div>
-        <div className="mb-6">
-          <label className="text-sm">
-            Confirm Password
-            <input
-              type="password"
-              className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={(e) => handleChange(e)}
-              required
-            />
-          </label>
-          {error.length > 0 && (
-            <div className="text-sm text-red_base">{error}</div>
-          )}
-        </div>
-        <div className="flex flex-col items-center justify-between">
-          <button
-            className="bg-green_base hover:bg-green_hover text-white font-bold text-xs py-2 px-8 rounded focus:outline-none focus:shadow-outline mb-3"
-            type="submit"
-            disabled={pending}
-          >
-            {!pending ? "Sign Up" : "Pleae Wait"}
-          </button>
-          <Link
-            className="inline-block align-baseline font-bold text-sm text-green_base hover:text-green_hover"
-            to="/login"
-          >
-            Already have an account?
-          </Link>
-        </div>
-      </form>
+          <div className="mb-3">
+            <label className="text-sm">
+              Email
+              <input
+                type="email"
+                className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
+                name="email"
+                value={formData.email}
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </label>
+          </div>
+          <div className="mb-6">
+            <label className="text-sm">
+              Password
+              <input
+                type="password"
+                className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
+                name="password"
+                value={formData.password}
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </label>
+          </div>
+          <div className="mb-6">
+            <label className="text-sm">
+              Confirm Password
+              <input
+                type="password"
+                className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={(e) => handleChange(e)}
+                required
+              />
+            </label>
+            {error.length > 0 && (
+              <div className="text-sm text-red_base">{error}</div>
+            )}
+          </div>
+          <div className="flex flex-col items-center justify-between">
+            <button
+              className="bg-green_base hover:bg-green_hover text-white font-bold text-xs py-2 px-8 rounded focus:outline-none focus:shadow-outline mb-3"
+              type="submit"
+              disabled={pending}
+            >
+              {!pending ? "Sign Up" : "Pleae Wait"}
+            </button>
+            <Link
+              className="inline-block align-baseline font-bold text-sm text-green_base hover:text-green_hover"
+              to="/login"
+            >
+              Already have an account?
+            </Link>
+          </div>
+        </form>
+      )}
     </div>
   );
 };

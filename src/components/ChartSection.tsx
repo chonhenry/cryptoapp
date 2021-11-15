@@ -7,6 +7,7 @@ import {
   TimerangeType,
 } from "../API/CryptoApi";
 import { Line } from "react-chartjs-2";
+import { Link } from "react-router-dom";
 
 interface Props {
   crypto: Crypto;
@@ -131,7 +132,15 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
       {crypto && cryptoHistory?.length > 0 ? (
         <>
           <div className="dark:text-white">
-            <div className="text-3xl ">{crypto.name}</div>
+            <div className="text-3xl flex items-center">
+              {crypto.name}
+              <Link
+                className="bg-gray-300 ml-3 text-sm px-2 py-1 bg-green_base text-white rounded"
+                to=""
+              >
+                Buy/Sell
+              </Link>
+            </div>
             <div className="text-3xl">
               {formatCurrency.format(parseFloat(crypto.price))}
             </div>

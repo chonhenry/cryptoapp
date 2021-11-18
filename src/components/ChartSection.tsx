@@ -135,8 +135,11 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
             <div className="text-3xl flex items-center">
               {crypto.name}
               <Link
-                className="bg-gray-300 ml-3 text-sm px-2 py-1 bg-green_base text-white rounded"
-                to=""
+                className="ml-3 text-sm px-2 py-1 bg-green_base text-white rounded"
+                to={{
+                  pathname: `/transaction/${crypto.name}`,
+                  state: { id: crypto.id, name: crypto.name },
+                }}
               >
                 Buy/Sell
               </Link>

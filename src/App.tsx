@@ -41,7 +41,7 @@ function App() {
             <Navbar />
             <Cryptocurrency />
           </Route>
-          <Route exact path="/transaction">
+          <Route exact path="/transaction/:crypto">
             <Navbar />
             <Transaction />
           </Route>

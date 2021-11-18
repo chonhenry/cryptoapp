@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { useHistory, Link, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { registerUser } from "../firebase/FirebaseAuthService";
+import {
+  createUser,
+  UsersCollection,
+  UserDocument,
+} from "../firebase/FirebaseFirestoreService";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
@@ -15,7 +20,6 @@ const Signup: React.FC = () => {
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
 
-  const history = useHistory();
   const user = useSelector((state: RootState) => state.user.user);
   const loading = useSelector((state: RootState) => state.user.loading);
 
@@ -33,14 +37,23 @@ const Signup: React.FC = () => {
     setPending(true);
 
     try {
-      const user = await registerUser(
+      const newUser = await registerUser(
         formData.email,
         formData.password,
         formData.name
       );
+      console.log("newUser", newUser);
+
+      if (newUser.user !== null) {
+        const id = newUser.user.uid;
+        const displayName = newUser.user.displayName;
+        const email = newUser.user.email;
+
+        await createUser(UsersCollection.USERS, { id, displayName, email });
+      }
+
       setError("");
       setPending(false);
-      history.push("/");
     } catch (error: any) {
       setError(`* ${error.message}`);
       setPending(false);

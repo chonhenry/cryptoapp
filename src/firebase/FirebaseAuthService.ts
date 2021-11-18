@@ -26,11 +26,9 @@ const subscribeToAuthChanges = (
   handleAuthChange: (user: User | null) => void
 ) => {
   auth.onAuthStateChanged((user) => {
-    // console.log("onAuthStateChanged");
     let stateUser: User | null = null;
 
     if (user) {
-      // console.log("user:", user);
       stateUser = {
         id: user.uid,
         displayName: user.displayName!,

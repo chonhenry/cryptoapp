@@ -138,7 +138,11 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
                 className="ml-3 text-sm px-2 py-1 bg-green_base text-white rounded"
                 to={{
                   pathname: `/transaction/${crypto.name}`,
-                  state: { id: crypto.id, name: crypto.name },
+                  state: {
+                    id: crypto.id,
+                    name: crypto.name,
+                    price: parseFloat(crypto.price),
+                  },
                 }}
               >
                 Buy/Sell

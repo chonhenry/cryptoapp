@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { toggleTheme } from "../hook/useDarkMode";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
@@ -13,29 +13,32 @@ const Dropdown: React.FC<Props> = ({ setDropdownOpen }) => {
   const user = useSelector((state: RootState) => state.user.user);
   const ref = useRef<HTMLDivElement | null>(null);
 
+  const handleOutsideClick = useCallback(
+    (e: any) => {
+      if (!ref.current) return;
+
+      if (ref.current.contains(e.target)) {
+        // inside click
+        return;
+      }
+      // outside click
+      setDropdownOpen(false);
+    },
+    [setDropdownOpen]
+  );
+
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, []);
+  }, [handleOutsideClick]);
 
   const handleClick = () => {
     if (user) {
       signoutUser();
       setDropdownOpen(false);
     }
-  };
-
-  const handleOutsideClick = (e: any) => {
-    if (!ref.current) return;
-
-    if (ref.current.contains(e.target)) {
-      // inside click
-      return;
-    }
-    // outside click
-    setDropdownOpen(false);
   };
 
   return (

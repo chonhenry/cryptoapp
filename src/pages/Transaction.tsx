@@ -40,10 +40,10 @@ const Transaction: React.FC = () => {
   return (
     <div className="flex justify-center items-center">
       <form
-        className="w-full max-w-sm h-3/6 mt-36 border-gray-200 rounded border"
+        className="w-full max-w-sm h-3/6 mt-36 border-gray-200 rounded border dark:border-gray-500 dark:bg-gray-800 dark:text-white"
         onSubmit={(e) => handleSubmit(e)}
       >
-        <section className="flex border-b border-gray-200 p-3 font-bold">
+        <section className="flex border-b border-gray-200 p-3 font-bold dark:border-gray-500">
           <div
             className={`cursor-pointer mr-3 ${buy ? "text-green_base" : ""} `}
             onClick={() => setBuy(true)}
@@ -63,7 +63,7 @@ const Transaction: React.FC = () => {
             <label className="">Amount</label>
             <div>
               <input
-                className="text-right py-2 px-3 w-32 appearance-none border rounded focus:outline-none focus:border-green_base"
+                className="text-right py-2 px-3 w-32 bg-transparent appearance-none border rounded focus:outline-none focus:border-green_base"
                 type="number"
                 placeholder="0"
                 min="0"
@@ -72,7 +72,7 @@ const Transaction: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center border-b">
+          <div className="flex justify-between items-center border-b dark:border-gray-500">
             <div className="text-green_base">Market Price</div>
             <div className="py-3 pr-3">
               {formatCurrency.format(location.state.price)}
@@ -90,7 +90,7 @@ const Transaction: React.FC = () => {
 
         <div className="flex justify-center p-3">
           <button
-            className="bg-green_base text-white py-2 px-8 rounded"
+            className="bg-green_base text-white h-9 w-24 rounded"
             type="submit"
           >
             {buy ? "Buy" : "Sell"}

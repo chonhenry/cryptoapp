@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../state/store";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../state/store";
 import { Link } from "react-router-dom";
 
 const Main = () => {
-  const user = useSelector((state: RootState) => state.user.user);
-  const loading = useSelector((state: RootState) => state.user.loading);
+  // const user = useSelector((state: RootState) => state.user.user);
+  // const loading = useSelector((state: RootState) => state.user.loading);
 
   return (
     <div className="max-w-5xl mt-6 m-auto flex justify-center">

@@ -4,7 +4,6 @@ import { registerUser } from "../firebase/FirebaseAuthService";
 import {
   createUser,
   UsersCollection,
-  UserDocument,
 } from "../firebase/FirebaseFirestoreService";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";

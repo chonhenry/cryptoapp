@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { signinUser } from "../firebase/FirebaseAuthService";
-import { useHistory, Link, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
@@ -9,7 +9,6 @@ const Login: React.FC = () => {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(false);
 
-  const history = useHistory();
   const user = useSelector((state: RootState) => state.user.user);
   const loading = useSelector((state: RootState) => state.user.loading);
 

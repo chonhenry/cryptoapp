@@ -10,10 +10,16 @@ export enum UsersCollection {
   USERS = "users",
 }
 
-export const createUser = (
+export const createUser = async (
   collection: UsersCollection.USERS,
   document: UserDocument
 ) => {
-  console.log("createUser", collection, document);
-  return firebaseStore.collection(collection).add(document);
+  const transactions = await firebaseStore
+    .collection("transactions")
+    .add({ userId: document.id });
+
+  await firebaseStore
+    .collection(collection)
+    .doc(document.id)
+    .set({ ...document, transactionsId: transactions.id });
 };

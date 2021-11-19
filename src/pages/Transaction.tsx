@@ -27,8 +27,17 @@ const Transaction: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    if (typeof amount === "string") return;
+
+    console.log(
+      `Amount: ${amount} ; Cost: ${formatCurrency.format(
+        amount * location.state.price * amount
+      )}`
+    );
+
+    
   };
 
   const formatCurrency = new Intl.NumberFormat("en-US", {
@@ -39,22 +48,19 @@ const Transaction: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center">
-      <form
-        className="w-full max-w-sm h-3/6 mt-36 border-gray-200 rounded border dark:border-gray-500 dark:bg-gray-800 dark:text-white"
-        onSubmit={(e) => handleSubmit(e)}
-      >
+      <div className="w-full max-w-sm h-3/6 mt-36 border-gray-200 rounded border dark:border-gray-500 dark:bg-gray-800 dark:text-white">
         <section className="flex border-b border-gray-200 p-3 font-bold dark:border-gray-500">
           <div
             className={`cursor-pointer mr-3 ${buy ? "text-green_base" : ""} `}
             onClick={() => setBuy(true)}
           >
-            Buy CoinName
+            Buy {location.state.name}
           </div>
           <div
             className={`cursor-pointer mr-3 ${!buy ? "text-green_base" : ""} `}
             onClick={() => setBuy(false)}
           >
-            Sell CoinName
+            Sell {location.state.name}
           </div>
         </section>
 
@@ -91,12 +97,12 @@ const Transaction: React.FC = () => {
         <div className="flex justify-center p-3">
           <button
             className="bg-green_base text-white h-9 w-24 rounded"
-            type="submit"
+            onClick={(e) => handleSubmit(e)}
           >
             {buy ? "Buy" : "Sell"}
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

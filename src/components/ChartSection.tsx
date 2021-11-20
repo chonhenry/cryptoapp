@@ -140,7 +140,8 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
                   pathname: `/transaction/${crypto.name}`,
                   state: {
                     id: crypto.id,
-                    name: crypto.symbol,
+                    name: crypto.name,
+                    symbol: crypto.symbol,
                     price: parseFloat(crypto.price),
                   },
                 }}

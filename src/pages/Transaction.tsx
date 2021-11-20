@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { useLocation, Redirect } from "react-router-dom";
+import { buyCoin } from "../firebase/FirebaseFirestoreService";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
 
 interface LocationState {
   id: number;
   name: string;
   price: number;
+  symbol: string;
 }
 
 const Transaction: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user.user);
   const location = useLocation<LocationState>();
 
   const [buy, setBuy] = useState(true);
   const [amount, setAmount] = useState<string | number>("");
 
-  if (!location.state) {
+  if (!location.state || user === null) {
     return <Redirect to="/" />;
   }
 
@@ -31,13 +36,15 @@ const Transaction: React.FC = () => {
     e.preventDefault();
     if (typeof amount === "string") return;
 
-    console.log(
-      `Amount: ${amount} ; Cost: ${formatCurrency.format(
-        amount * location.state.price * amount
-      )}`
-    );
+    // console.log(
+    //   `Amount: ${amount} ; Cost: ${formatCurrency.format(
+    //     amount * location.state.price * amount
+    //   )}`
+    // );
 
-    
+    const { name, id, price, symbol } = location.state;
+
+    buyCoin({ name, symbol, coinId: id, price, qty: amount }, user.id);
   };
 
   const formatCurrency = new Intl.NumberFormat("en-US", {
@@ -54,13 +61,13 @@ const Transaction: React.FC = () => {
             className={`cursor-pointer mr-3 ${buy ? "text-green_base" : ""} `}
             onClick={() => setBuy(true)}
           >
-            Buy {location.state.name}
+            Buy {location.state.symbol}
           </div>
           <div
             className={`cursor-pointer mr-3 ${!buy ? "text-green_base" : ""} `}
             onClick={() => setBuy(false)}
           >
-            Sell {location.state.name}
+            Sell {location.state.symbol}
           </div>
         </section>
 

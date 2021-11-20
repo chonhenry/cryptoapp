@@ -48,8 +48,6 @@ export const buyCoin = async (
   },
   userId: string
 ) => {
-  // console.log({ ...data, type: "buy", date: new Date() });
-
   try {
     const userRef = firebaseStore.collection("users").doc(userId);
 
@@ -78,11 +76,14 @@ export const buyCoin = async (
       }
     }
 
-    // const user = (await userRef.get()).data();
+    // add transaction history
+    const user = (await userRef.get()).data();
+    const transactionsId = user?.transactionsId;
 
-    // console.log(user);
-    // console.log(user?.transactionsId);
-
-    // const c = firebaseStore.collection('users')
+    await firebaseStore
+      .collection("transactions")
+      .doc(transactionsId)
+      .collection("history")
+      .add({ ...data, type: "buy", date: new Date() });
   } catch (error) {}
 };

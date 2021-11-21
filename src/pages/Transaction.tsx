@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, Redirect } from "react-router-dom";
-import { buyCoin } from "../firebase/FirebaseFirestoreService";
+import { buyCoin, checkOwned } from "../firebase/FirebaseFirestoreService";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
@@ -17,6 +17,15 @@ const Transaction: React.FC = () => {
 
   const [buy, setBuy] = useState(true);
   const [amount, setAmount] = useState<string | number>("");
+  const [alreadyOwned, setAlreadyOwned] = useState(false);
+
+  useEffect(() => {
+    if (user && user.id) {
+      checkOwned(user?.id, location.state.id).then((res) => {
+        setAlreadyOwned(res);
+      });
+    }
+  }, [user, location.state.id]);
 
   if (!location.state || user === null) {
     return <Redirect to="/" />;
@@ -32,19 +41,15 @@ const Transaction: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     if (typeof amount === "string") return;
 
-    // console.log(
-    //   `Amount: ${amount} ; Cost: ${formatCurrency.format(
-    //     amount * location.state.price * amount
-    //   )}`
-    // );
-
     const { name, id, price, symbol } = location.state;
 
-    buyCoin({ name, symbol, coinId: id, price, qty: amount }, user.id);
+    await buyCoin({ name, symbol, coinId: id, price, qty: amount }, user.id);
   };
 
   const formatCurrency = new Intl.NumberFormat("en-US", {
@@ -63,12 +68,16 @@ const Transaction: React.FC = () => {
           >
             Buy {location.state.symbol}
           </div>
-          <div
-            className={`cursor-pointer mr-3 ${!buy ? "text-green_base" : ""} `}
-            onClick={() => setBuy(false)}
-          >
-            Sell {location.state.symbol}
-          </div>
+          {alreadyOwned && (
+            <div
+              className={`cursor-pointer mr-3 ${
+                !buy ? "text-green_base" : ""
+              } `}
+              onClick={() => setBuy(false)}
+            >
+              Sell {location.state.symbol}
+            </div>
+          )}
         </section>
 
         <section className="p-3">

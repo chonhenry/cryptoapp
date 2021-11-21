@@ -38,6 +38,24 @@ export const createUser = async (
   //   .update({ transactionsId: transactions.id });
 };
 
+export const checkOwned = async (
+  userId: string,
+  coinId: number
+): Promise<boolean> => {
+  const length = (
+    await firebaseStore
+      .collection("users")
+      .doc(userId)
+      .collection("ownedCryptos")
+      .where("coinId", "==", coinId)
+      .get()
+  ).docs.length;
+
+  if (length === 0) return false;
+
+  return true;
+};
+
 export const buyCoin = async (
   data: {
     name: string;

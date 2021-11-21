@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Redirect } from "react-router-dom";
-import { buyCoin, checkOwned } from "../firebase/FirebaseFirestoreService";
+import { buyCoin, checkOwnedQty } from "../firebase/FirebaseFirestoreService";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
@@ -17,11 +17,11 @@ const Transaction: React.FC = () => {
 
   const [buy, setBuy] = useState(true);
   const [amount, setAmount] = useState<string | number>("");
-  const [alreadyOwned, setAlreadyOwned] = useState(false);
+  const [alreadyOwned, setAlreadyOwned] = useState(0);
 
   useEffect(() => {
     if (user && user.id) {
-      checkOwned(user?.id, location.state.id).then((res) => {
+      checkOwnedQty(user?.id, location.state.id).then((res) => {
         setAlreadyOwned(res);
       });
     }
@@ -68,7 +68,7 @@ const Transaction: React.FC = () => {
           >
             Buy {location.state.symbol}
           </div>
-          {alreadyOwned && (
+          {alreadyOwned > 0 && (
             <div
               className={`cursor-pointer mr-3 ${
                 !buy ? "text-green_base" : ""
@@ -118,6 +118,12 @@ const Transaction: React.FC = () => {
             {buy ? "Buy" : "Sell"}
           </button>
         </div>
+
+        {alreadyOwned > 0 && (
+          <div className="text-center mb-3 text-green_base">
+            {`You currently own ${alreadyOwned} ${location.state.symbol}`}
+          </div>
+        )}
       </div>
     </div>
   );

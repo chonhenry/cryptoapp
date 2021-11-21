@@ -95,7 +95,7 @@ const Transaction: React.FC = () => {
             </div>
           </div>
           <div className="flex justify-between items-center border-b dark:border-gray-500">
-            <div className="text-green_base">Market Price</div>
+            <div className="">Market Price</div>
             <div className="py-3 pr-3">
               {formatCurrency.format(location.state.price)}
             </div>
@@ -120,8 +120,10 @@ const Transaction: React.FC = () => {
         </div>
 
         {alreadyOwned > 0 && (
-          <div className="text-center mb-3 text-green_base">
-            {`You currently own ${alreadyOwned} ${location.state.symbol}`}
+          <div className="text-center mb-3 dark:text-white">
+            You currently own{" "}
+            <span className="text-green_base">{alreadyOwned}</span>{" "}
+            {location.state.symbol}
           </div>
         )}
       </div>

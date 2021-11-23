@@ -67,7 +67,7 @@ export const buyCoin = async (
     coinId: number;
   },
   userId: string
-) => {
+): Promise<number | undefined> => {
   try {
     const userRef = firebaseStore.collection("users").doc(userId);
 
@@ -78,10 +78,13 @@ export const buyCoin = async (
     const ownedCryptosRef = userRef.collection("ownedCryptos");
     const { name, symbol, qty, coinId } = data;
 
+    let updatedQty: number;
+
     // update coin qty
     if (cryptosLength === 0) {
       // if users doesn't own any cryptos
       await ownedCryptosRef.add({ name, symbol, qty, coinId });
+      updatedQty = qty;
     } else {
       const ref = await ownedCryptosRef.where("name", "==", name).get();
       const length = ref.docs.length;
@@ -89,14 +92,13 @@ export const buyCoin = async (
       if (length > 0) {
         // if user already owns the crypto
         const currentOwnedQty = ref.docs[0].data().qty;
-        await ownedCryptosRef
-          .doc(ref.docs[0].id)
-          .update({ qty: currentOwnedQty + qty });
+        updatedQty = currentOwnedQty + qty;
+        await ownedCryptosRef.doc(ref.docs[0].id).update({ qty: updatedQty });
       } else {
         await ownedCryptosRef.add({ name, symbol, qty, coinId });
+        updatedQty = qty;
       }
     }
-
     // add transaction history
     const user = (await userRef.get()).data();
     const transactionsId = user?.transactionsId;
@@ -106,6 +108,8 @@ export const buyCoin = async (
       .doc(transactionsId)
       .collection("history")
       .add({ ...data, type: "buy", date: new Date() });
+
+    return updatedQty;
   } catch (error) {}
 };
 
@@ -118,7 +122,7 @@ export const sellCoin = async (
     coinId: number;
   },
   userId: string
-) => {
+): Promise<number | undefined> => {
   try {
     // update coin qty
     const { name, symbol, qty, coinId } = data;
@@ -140,5 +144,7 @@ export const sellCoin = async (
       .doc(transactionsId)
       .collection("history")
       .add({ ...data, type: "sell", date: new Date() });
+
+    return currentOwnedQty - qty;
   } catch (error) {}
 };

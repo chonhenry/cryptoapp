@@ -23,6 +23,7 @@ const Transaction: React.FC = () => {
   const [amount, setAmount] = useState<string | number>("");
   const [alreadyOwned, setAlreadyOwned] = useState(0);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (user && user.id) {
@@ -58,7 +59,14 @@ const Transaction: React.FC = () => {
     const { name, id, price, symbol } = location.state;
 
     if (buy) {
-      await buyCoin({ name, symbol, coinId: id, price, qty: amount }, user.id);
+      const newQty = await buyCoin(
+        { name, symbol, coinId: id, price, qty: amount },
+        user.id
+      );
+      if (newQty !== undefined) {
+        setAlreadyOwned(newQty);
+        setSuccessMessage(`You have successfully bought ${amount} ${symbol}`);
+      }
       return;
     }
 
@@ -69,7 +77,14 @@ const Transaction: React.FC = () => {
       return;
     }
 
-    sellCoin({ name, symbol, coinId: id, price, qty: amount }, user.id);
+    const newQty = await sellCoin(
+      { name, symbol, coinId: id, price, qty: amount },
+      user.id
+    );
+    if (newQty !== undefined) {
+      setAlreadyOwned(newQty);
+      setSuccessMessage(`You have successfully sold ${amount} ${symbol}`);
+    }
   };
 
   const formatCurrency = new Intl.NumberFormat("en-US", {
@@ -140,6 +155,7 @@ const Transaction: React.FC = () => {
         </div>
 
         <div className="text-red-600 text-center">{error}</div>
+        <div className="text-green_base text-center">{successMessage}</div>
 
         <div className="text-center mb-3 dark:text-white">
           You currently own{" "}

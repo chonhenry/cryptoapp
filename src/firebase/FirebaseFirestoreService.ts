@@ -78,6 +78,7 @@ export const buyCoin = async (
     const ownedCryptosRef = userRef.collection("ownedCryptos");
     const { name, symbol, qty, coinId } = data;
 
+    // update coin qty
     if (cryptosLength === 0) {
       // if users doesn't own any cryptos
       await ownedCryptosRef.add({ name, symbol, qty, coinId });
@@ -86,7 +87,7 @@ export const buyCoin = async (
       const length = ref.docs.length;
 
       if (length > 0) {
-        // if user already owns th crypto
+        // if user already owns the crypto
         const currentOwnedQty = ref.docs[0].data().qty;
         await ownedCryptosRef
           .doc(ref.docs[0].id)
@@ -105,5 +106,39 @@ export const buyCoin = async (
       .doc(transactionsId)
       .collection("history")
       .add({ ...data, type: "buy", date: new Date() });
+  } catch (error) {}
+};
+
+export const sellCoin = async (
+  data: {
+    name: string;
+    symbol: string;
+    qty: number;
+    price: number;
+    coinId: number;
+  },
+  userId: string
+) => {
+  try {
+    // update coin qty
+    const { name, symbol, qty, coinId } = data;
+    const userRef = firebaseStore.collection("users").doc(userId);
+    const ownedCryptosRef = userRef.collection("ownedCryptos");
+
+    const ref = await ownedCryptosRef.where("coinId", "==", coinId).get();
+    const currentOwnedQty = ref.docs[0].data().qty;
+    await ownedCryptosRef
+      .doc(ref.docs[0].id)
+      .update({ qty: currentOwnedQty - qty });
+
+    // add transaction history
+    const user = (await userRef.get()).data();
+    const transactionsId = user?.transactionsId;
+
+    await firebaseStore
+      .collection("transactions")
+      .doc(transactionsId)
+      .collection("history")
+      .add({ ...data, type: "sell", date: new Date() });
   } catch (error) {}
 };

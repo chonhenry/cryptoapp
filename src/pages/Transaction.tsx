@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Redirect } from "react-router-dom";
-import { buyCoin, checkOwnedQty } from "../firebase/FirebaseFirestoreService";
+import {
+  buyCoin,
+  checkOwnedQty,
+  sellCoin,
+} from "../firebase/FirebaseFirestoreService";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
@@ -18,6 +22,7 @@ const Transaction: React.FC = () => {
   const [buy, setBuy] = useState(true);
   const [amount, setAmount] = useState<string | number>("");
   const [alreadyOwned, setAlreadyOwned] = useState(0);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (user && user.id) {
@@ -45,11 +50,26 @@ const Transaction: React.FC = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    if (typeof amount === "string") return;
+
+    if (typeof amount === "string" || amount === 0) {
+      return;
+    }
 
     const { name, id, price, symbol } = location.state;
 
-    await buyCoin({ name, symbol, coinId: id, price, qty: amount }, user.id);
+    if (buy) {
+      await buyCoin({ name, symbol, coinId: id, price, qty: amount }, user.id);
+      return;
+    }
+
+    if (alreadyOwned < amount) {
+      setError(
+        `You can only sell up to ${alreadyOwned} ${location.state.symbol}`
+      );
+      return;
+    }
+
+    sellCoin({ name, symbol, coinId: id, price, qty: amount }, user.id);
   };
 
   const formatCurrency = new Intl.NumberFormat("en-US", {
@@ -101,7 +121,7 @@ const Transaction: React.FC = () => {
             </div>
           </div>
           <div className="flex justify-between items-center">
-            <div className="">Cost</div>
+            <div className="">{buy ? "Cost" : "Credit"}</div>
             <div className="pt-3 pr-3">
               {typeof amount === "string"
                 ? "$0.00"
@@ -119,13 +139,13 @@ const Transaction: React.FC = () => {
           </button>
         </div>
 
-        {alreadyOwned > 0 && (
-          <div className="text-center mb-3 dark:text-white">
-            You currently own{" "}
-            <span className="text-green_base">{alreadyOwned}</span>{" "}
-            {location.state.symbol}
-          </div>
-        )}
+        <div className="text-red-600 text-center">{error}</div>
+
+        <div className="text-center mb-3 dark:text-white">
+          You currently own{" "}
+          <span className="text-green_base">{alreadyOwned}</span>{" "}
+          {location.state.symbol}
+        </div>
       </div>
     </div>
   );

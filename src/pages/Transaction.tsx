@@ -23,6 +23,7 @@ const Transaction: React.FC = () => {
   const [amount, setAmount] = useState<string | number>("");
   const [alreadyOwned, setAlreadyOwned] = useState(0);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
@@ -51,6 +52,7 @@ const Transaction: React.FC = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+    setLoading(true);
 
     if (typeof amount === "string" || amount === 0) {
       return;
@@ -59,14 +61,20 @@ const Transaction: React.FC = () => {
     const { name, id, price, symbol } = location.state;
 
     if (buy) {
-      const newQty = await buyCoin(
-        { name, symbol, coinId: id, price, qty: amount },
-        user.id
-      );
-      if (newQty !== undefined) {
-        setAlreadyOwned(newQty);
-        setSuccessMessage(`You have successfully bought ${amount} ${symbol}`);
+      try {
+        const newQty = await buyCoin(
+          { name, symbol, coinId: id, price, qty: amount },
+          user.id
+        );
+        if (newQty !== undefined) {
+          setAlreadyOwned(newQty);
+          setSuccessMessage(`You have successfully bought ${amount} ${symbol}`);
+        }
+      } catch (error: any) {
+        setError(error.message);
       }
+
+      setLoading(false);
       return;
     }
 
@@ -74,17 +82,22 @@ const Transaction: React.FC = () => {
       setError(
         `You can only sell up to ${alreadyOwned} ${location.state.symbol}`
       );
+      setLoading(false);
       return;
     }
 
-    const newQty = await sellCoin(
-      { name, symbol, coinId: id, price, qty: amount },
-      user.id
-    );
-    if (newQty !== undefined) {
+    try {
+      const newQty = await sellCoin(
+        { name, symbol, coinId: id, price, qty: amount },
+        user.id
+      );
       setAlreadyOwned(newQty);
       setSuccessMessage(`You have successfully sold ${amount} ${symbol}`);
+    } catch (error: any) {
+      setError(error.message);
     }
+
+    setLoading(false);
   };
 
   const formatCurrency = new Intl.NumberFormat("en-US", {
@@ -150,7 +163,7 @@ const Transaction: React.FC = () => {
             className="bg-green_base text-white h-9 w-24 rounded"
             onClick={(e) => handleSubmit(e)}
           >
-            {buy ? "Buy" : "Sell"}
+            {loading ? "Loading" : buy ? "Buy" : "Sell"}
           </button>
         </div>
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { firebaseStore } from "./config";
 
 export interface UserDocument {
@@ -31,11 +32,6 @@ export const createUser = async (
     .collection(collection)
     .doc(document.id)
     .set({ ...document, transactionsId: transactions.id });
-
-  // await firebaseStore
-  //   .collection(collection)
-  //   .doc(document.id)
-  //   .update({ transactionsId: transactions.id });
 };
 
 export const checkOwnedQty = async (
@@ -67,7 +63,7 @@ export const buyCoin = async (
     coinId: number;
   },
   userId: string
-): Promise<number | undefined> => {
+): Promise<number> => {
   try {
     const userRef = firebaseStore.collection("users").doc(userId);
 
@@ -110,7 +106,9 @@ export const buyCoin = async (
       .add({ ...data, type: "buy", date: new Date() });
 
     return updatedQty;
-  } catch (error) {}
+  } catch (error) {
+    throw new Error(`Failed to buy ${data.symbol}`);
+  }
 };
 
 export const sellCoin = async (
@@ -122,7 +120,7 @@ export const sellCoin = async (
     coinId: number;
   },
   userId: string
-): Promise<number | undefined> => {
+): Promise<number> => {
   try {
     // update coin qty
     const { name, symbol, qty, coinId } = data;
@@ -146,5 +144,8 @@ export const sellCoin = async (
       .add({ ...data, type: "sell", date: new Date() });
 
     return currentOwnedQty - qty;
-  } catch (error) {}
+  } catch (error) {
+    // return undefined;
+    throw new Error(`Failed to sell ${data.symbol}`);
+  }
 };

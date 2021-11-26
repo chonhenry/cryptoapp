@@ -8,6 +8,8 @@ import {
 } from "../API/CryptoApi";
 import { Line } from "react-chartjs-2";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
 
 interface Props {
   crypto: Crypto;
@@ -21,6 +23,8 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
   const [prices, setPrices] = useState<string[]>([]);
   const [isProfit, setIsProfit] = useState(true);
   // const [loading, setLoading] = useState(true);
+
+  const user = useSelector((state: RootState) => state.user.user);
 
   const data = {
     labels: timestamps,
@@ -134,20 +138,22 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
           <div className="dark:text-white">
             <div className="text-3xl flex items-center">
               {crypto.name}
-              <Link
-                className="ml-3 text-sm px-2 py-1 bg-green_base text-white rounded"
-                to={{
-                  pathname: `/transaction/${crypto.name}`,
-                  state: {
-                    id: crypto.id,
-                    name: crypto.name,
-                    symbol: crypto.symbol,
-                    price: parseFloat(crypto.price),
-                  },
-                }}
-              >
-                Buy/Sell
-              </Link>
+              {user && (
+                <Link
+                  className="ml-3 text-sm px-2 py-1 bg-green_base text-white rounded"
+                  to={{
+                    pathname: `/transaction/${crypto.name}`,
+                    state: {
+                      id: crypto.id,
+                      name: crypto.name,
+                      symbol: crypto.symbol,
+                      price: parseFloat(crypto.price),
+                    },
+                  }}
+                >
+                  Buy/Sell
+                </Link>
+              )}
             </div>
             <div className="text-3xl">
               {formatCurrency.format(parseFloat(crypto.price))}

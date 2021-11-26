@@ -3,7 +3,10 @@ import HTMLReactParser from "html-react-parser";
 import millify from "millify";
 import { Crypto } from "../API/CryptoApi";
 import { CryptoNews } from "../API/CryptoNewsApi";
+import { checkOwnedQty } from "../firebase/FirebaseFirestoreService";
 import News from "./News";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
 
 interface Props {
   crypto: Crypto;
@@ -16,9 +19,12 @@ enum Expand {
 }
 
 const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
+  const user = useSelector((state: RootState) => state.user.user);
+
   const [description, setDescription] = useState<
     string | JSX.Element | JSX.Element[]
   >("");
+  const [ownedCoinQty, setOwnedCoinQty] = useState<null | number>(null);
   const [canExpand, setCanExpand] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -37,6 +43,17 @@ const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
       setDescription(parsedHtml);
     }
   }, [parsedHtml]);
+
+  useEffect(() => {
+    const getOwnedCoinQty = async () => {
+      if (user === null) return;
+
+      let res = await checkOwnedQty(user.id, crypto.id);
+      setOwnedCoinQty(res);
+    };
+
+    getOwnedCoinQty();
+  }, [crypto.id, user]);
 
   const handleDescClick = () => {
     if (isExpanded) {
@@ -61,6 +78,24 @@ const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
 
   return (
     <div className="">
+      {ownedCoinQty !== null && (
+        <div className="inline-block border mb-10 p-3 rounded-md">
+          <div className="">
+            You currently own{" "}
+            <span className="text-green_base font-bold">{ownedCoinQty}</span>{" "}
+            {crypto.symbol}
+          </div>
+
+          <div className="h-px bg-gray-300 dark:bg-gray-800 my-3"></div>
+
+          <div className="">
+            Total value:{" "}
+            <span className="text-green_base font-bold">
+              ${millify(ownedCoinQty * parseFloat(crypto.price))}
+            </span>
+          </div>
+        </div>
+      )}
       <div className="text-xl dark:text-white">About</div>
       <div className="h-0.5 bg-gray-300 dark:bg-gray-800 my-3"></div>
       <div className="coin_desc dark:text-white mb-10">

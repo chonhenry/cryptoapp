@@ -39,10 +39,6 @@ const Cryptocurrency: React.FC = () => {
         {crypto && (
           <>
             <ChartSection crypto={crypto} />
-          </>
-        )}
-        {crypto && (
-          <>
             <CryptoDetails crypto={crypto} news={news} />
           </>
         )}

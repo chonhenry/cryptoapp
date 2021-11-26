@@ -79,7 +79,7 @@ const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
   return (
     <div className="">
       {ownedCoinQty !== null && (
-        <div className="inline-block border mb-10 p-3 rounded-md">
+        <div className="inline-block border mb-10 p-3 rounded-md dark:text-white dark:border-gray-500">
           <div className="">
             You currently own{" "}
             <span className="text-green_base font-bold">{ownedCoinQty}</span>{" "}

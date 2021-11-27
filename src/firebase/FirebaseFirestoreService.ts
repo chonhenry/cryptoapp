@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { firebaseStore } from "./config";
 
 export interface UserDocument {
@@ -73,7 +72,6 @@ export const getOwnedCoin = async (userId: string): Promise<OwnedCoin[]> => {
 
   ref.docs.forEach((coin) => {
     const { coinId, qty, name, symbol } = coin.data();
-    // console.log(coin.data());
     coins.push({ coinId, qty, name, symbol });
   });
 
@@ -149,7 +147,7 @@ export const sellCoin = async (
 ): Promise<number> => {
   try {
     // update coin qty
-    const { name, symbol, qty, coinId } = data;
+    const { qty, coinId } = data;
     const userRef = firebaseStore.collection("users").doc(userId);
     const ownedCryptosRef = userRef.collection("ownedCryptos");
 

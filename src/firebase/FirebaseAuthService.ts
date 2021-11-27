@@ -6,19 +6,16 @@ const registerUser = async (
   password: string,
   displayName: string
 ) => {
-  //   console.log("register user");
   const res = await auth.createUserWithEmailAndPassword(email, password);
   await res.user?.updateProfile({ displayName });
   return res;
 };
 
 const signinUser = (email: string, password: string) => {
-  //   console.log("signin user");
   return auth.signInWithEmailAndPassword(email, password);
 };
 
 const signoutUser = () => {
-  //   console.log("logoutUser");
   return auth.signOut();
 };
 
@@ -35,7 +32,6 @@ const subscribeToAuthChanges = (
         email: user.email!,
       };
     } else {
-      // console.log("user:", null);
     }
 
     handleAuthChange(stateUser);

@@ -13,10 +13,8 @@ const Portfolio: React.FC = () => {
   const [totalValue, setTotalValue] = useState<number | null>(null);
 
   useEffect(() => {
-    console.log(123);
     if (!user) return;
     getOwnedCoin(user.id).then((res) => {
-      console.log(res);
       setCoins(res);
     });
   }, [cryptos, user]);

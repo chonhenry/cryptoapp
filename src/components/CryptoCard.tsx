@@ -35,7 +35,7 @@ const CryptoCard: React.FC<Props> = ({
       <div className="m-3 flex justify-between items-center">
         <div className="">{`${rank}. ${name}`}</div>
         <div className="h-9">
-          <img className="h-full" src={icon} />
+          <img className="h-full" src={icon} alt="" />
         </div>
       </div>
 

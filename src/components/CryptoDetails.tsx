@@ -34,7 +34,6 @@ const CryptoDetails: React.FC<Props> = ({ crypto, news }) => {
 
   useEffect(() => {
     if (parsedHtml instanceof Array) {
-      // console.log(parsedHtml[0]);
       setDescription(parsedHtml[0]);
       if (parsedHtml.length > 1) {
         setCanExpand(true);

@@ -77,8 +77,6 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
       const data = await getCryptoHistory(id, time);
 
       setCryptoHistory(data);
-      // console.log(data);
-
       let prices: string[] = [];
       let timestamps: string[] = [];
 

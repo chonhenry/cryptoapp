@@ -41,7 +41,6 @@ const Signup: React.FC = () => {
         formData.password,
         formData.name
       );
-      console.log("newUser", newUser);
 
       if (newUser.user !== null) {
         const id = newUser.user.uid;

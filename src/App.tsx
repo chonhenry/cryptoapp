@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
 import Cryptocurrency from "./pages/Cryptocurrency";
 import Transaction from "./pages/Transaction";
+import Portfolio from "./pages/Portfolio";
 import { subscribeToAuthChanges } from "./firebase/FirebaseAuthService";
 import { useDispatch } from "react-redux";
 import { setUser } from "./state/slices/userSlice";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
+          
           <Route exact path="/">
             <Navbar />
             <Main />
@@ -44,6 +46,10 @@ function App() {
           <Route exact path="/transaction/:crypto">
             <Navbar />
             <Transaction />
+          </Route>
+          <Route exact path="/portfolio">
+            <Navbar />
+            <Portfolio />
           </Route>
         </Switch>
       </div>

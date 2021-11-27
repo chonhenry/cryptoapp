@@ -16,6 +16,13 @@ export interface Transaction {
   type: string;
 }
 
+export interface OwnedCoin {
+  coinId: number;
+  qty: number;
+  name: string;
+  symbol: string;
+}
+
 export enum UsersCollection {
   USERS = "users",
 }
@@ -52,6 +59,25 @@ export const checkOwnedQty = async (
   if (qty === 0) return 0;
 
   return qty;
+};
+
+export const getOwnedCoin = async (userId: string): Promise<OwnedCoin[]> => {
+  const ref = await firebaseStore
+    .collection("users")
+    .doc(userId)
+    .collection("ownedCryptos")
+    .orderBy("qty", "desc")
+    .get();
+
+  const coins: OwnedCoin[] = [];
+
+  ref.docs.forEach((coin) => {
+    const { coinId, qty, name, symbol } = coin.data();
+    // console.log(coin.data());
+    coins.push({ coinId, qty, name, symbol });
+  });
+
+  return coins;
 };
 
 export const buyCoin = async (

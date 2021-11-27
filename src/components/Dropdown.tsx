@@ -66,6 +66,13 @@ const Dropdown: React.FC<Props> = ({ setDropdownOpen }) => {
           <div className="mx-3 font-bold mb-3 dark:text-white max-w-xs text-center">
             {user.displayName}
           </div>
+          <Link
+            to="/portfolio"
+            className="w-full text-center cursor-pointer hover:bg-gray-200 py-3 dark:text-white dark:hover:bg-gray-700"
+            onClick={() => setDropdownOpen(false)}
+          >
+            Portfolio
+          </Link>
         </>
       )}
 

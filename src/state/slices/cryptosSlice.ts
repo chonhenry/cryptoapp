@@ -12,6 +12,12 @@ const initialState: CryptosState = {
   status: "loading",
 };
 
+export enum CryptosStatus {
+  LOADING = "loading",
+  SUCCESS = "success",
+  FAILED = "failed",
+}
+
 export const getCryptos = createAsyncThunk("cryptos/fetchCryptos", async () => {
   return fetchCryptos()
     .then((res) => {

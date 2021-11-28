@@ -39,7 +39,7 @@ const TransactionItem: React.FC<Props> = ({ transaction }) => {
   return (
     <Link
       to={`/crypto/${transaction.coinId}`}
-      className="hover:bg-gray-100 cursor-pointer border-b py-6 px-3 flex justify-between"
+      className="hover:bg-gray-100 cursor-pointer border-b py-6 px-3 flex justify-between dark:text-white dark:hover:bg-gray-800 dark:border-gray-700"
     >
       <div className="">
         <div className="font-semibold">

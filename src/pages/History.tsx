@@ -50,10 +50,8 @@ const History: React.FC = () => {
 
   return (
     <div className="max-w-2xl mt-6 m-auto flex justify-center ">
-      <section className="w-full">
-        <div className="text-3xl mb-6 dark:text-white">
-          Your transactions history
-        </div>
+      <section className="w-full dark:text-white">
+        <div className="text-3xl mb-6">Your transactions history</div>
 
         <div className="flex justify-start mb-6">
           <div

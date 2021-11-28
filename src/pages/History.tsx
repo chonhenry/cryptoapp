@@ -15,12 +15,14 @@ const History: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [filter, setFilter] = useState<Filter>(Filter.ALL);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) return;
 
     getTransactions(user.id).then((res) => {
       setTransactions(res);
+      setLoading(false);
     });
   }, [user]);
 
@@ -80,7 +82,13 @@ const History: React.FC = () => {
           </div>
         </div>
 
-        {transactions.length > 0 && renderTransactions()}
+        {loading ? (
+          <div>Loading...</div>
+        ) : transactions.length === 0 ? (
+          <div>You do not any transactions.</div>
+        ) : (
+          renderTransactions()
+        )}
       </section>
     </div>
   );

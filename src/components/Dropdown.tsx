@@ -73,6 +73,13 @@ const Dropdown: React.FC<Props> = ({ setDropdownOpen }) => {
           >
             Portfolio
           </Link>
+          <Link
+            to="/history"
+            className="w-full text-center cursor-pointer hover:bg-gray-200 py-3 dark:text-white dark:hover:bg-gray-700"
+            onClick={() => setDropdownOpen(false)}
+          >
+            History
+          </Link>
         </>
       )}
 

@@ -13,6 +13,8 @@ export interface Transaction {
   qty: number;
   price: number;
   type: string;
+  coinId: number;
+  transactionId: string;
 }
 
 export interface OwnedCoin {
@@ -172,4 +174,29 @@ export const sellCoin = async (
     // return undefined;
     throw new Error(`Failed to sell ${data.symbol}`);
   }
+};
+
+export const getTransactions = async (
+  userId: string
+): Promise<Transaction[]> => {
+  const transactions = (
+    await (
+      await firebaseStore
+        .collection("transactions")
+        .where("userId", "==", userId)
+        .get()
+    ).docs[0].ref
+      .collection("history")
+      .orderBy("date", "desc")
+      .get()
+  ).docs;
+
+  return transactions.map((transaction) => {
+    const { coinId, name, price, qty, symbol, type } = transaction.data();
+    let { date } = transaction.data();
+    const transactionId = transaction.id;
+    date = new Date(date.seconds * 1000);
+
+    return { coinId, date, name, price, qty, symbol, type, transactionId };
+  });
 };

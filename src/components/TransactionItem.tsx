@@ -8,7 +8,6 @@ interface Props {
 
 const TransactionItem: React.FC<Props> = ({ transaction }) => {
   const formatDate = (date: Date): string => {
-    console.log(date);
     const year = date.getFullYear();
     const day = date.getDate();
     const month = date.getMonth();

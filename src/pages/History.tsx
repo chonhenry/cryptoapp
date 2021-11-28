@@ -7,7 +7,6 @@ import { Transaction } from "../firebase/FirebaseFirestoreService";
 
 const History: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
-  //   const cryptos = useSelector((state: RootState) => state.cryptos.list);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {

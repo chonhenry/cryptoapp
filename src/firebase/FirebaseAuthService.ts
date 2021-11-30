@@ -21,7 +21,9 @@ const signoutUser = () => {
 
 const subscribeToAuthChanges = (
   handleAuthChange: (user: User | null) => void
-) => {
+): boolean => {
+  let authUser;
+
   auth.onAuthStateChanged((user) => {
     let stateUser: User | null = null;
 
@@ -35,7 +37,26 @@ const subscribeToAuthChanges = (
     }
 
     handleAuthChange(stateUser);
+
+    authUser = stateUser;
   });
+  if (!authUser) return false;
+
+  return true;
 };
 
-export { registerUser, subscribeToAuthChanges, signoutUser, signinUser };
+const checkLogin = () => {
+  const user = auth.currentUser;
+
+  if (user === null) return false;
+
+  return true;
+};
+
+export {
+  registerUser,
+  subscribeToAuthChanges,
+  signoutUser,
+  signinUser,
+  checkLogin,
+};

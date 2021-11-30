@@ -32,7 +32,7 @@ const Transaction: React.FC = () => {
         setAlreadyOwned(res);
       });
     }
-  }, [user, location.state.id]);
+  }, [user, location.state?.id]);
 
   if (!location.state || user === null) {
     return <Redirect to="/" />;

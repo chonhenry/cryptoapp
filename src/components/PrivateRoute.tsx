@@ -17,7 +17,6 @@ const PrivateRoute: React.FC<Props> = ({
   if (isAuth === undefined) {
     return <div>Loading...</div>;
   }
-  console.log(isAuth);
 
   return (
     <Route

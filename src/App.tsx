@@ -26,7 +26,6 @@ function App() {
   useEffect(() => {
     setIsAuth(subscribeToAuthChanges((user) => dispatch(setUser(user))));
     dispatch(getCryptos());
-    console.log(checkLogin());
   }, [dispatch]);
 
   return (

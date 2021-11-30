@@ -13,7 +13,6 @@ import { RootState } from "../state/store";
 
 interface Props {
   crypto: Crypto;
-  // cryptoHistory: CryptoHistory[] | undefined;
 }
 
 const ChartSection: React.FC<Props> = ({ crypto }) => {
@@ -22,7 +21,6 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
   const [timestamps, setTimestamps] = useState<string[]>([]);
   const [prices, setPrices] = useState<string[]>([]);
   const [isProfit, setIsProfit] = useState(true);
-  // const [loading, setLoading] = useState(true);
 
   const user = useSelector((state: RootState) => state.user.user);
 
@@ -95,7 +93,6 @@ const ChartSection: React.FC<Props> = ({ crypto }) => {
 
       setPrices(prices);
       setTimestamps(timestamps);
-      // setLoading(false);
     } catch (error) {}
   };
 

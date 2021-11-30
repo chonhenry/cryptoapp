@@ -85,19 +85,6 @@ const Signup: React.FC = () => {
               />
             </label>
           </div>
-          {/* <div className="mb-3">
-          <label className="text-sm">
-            Last name
-            <input
-              type="text"
-              className="appearance-none border rounded w-full mt-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green_base"
-              name="lastName"
-              value={formData.lastName}
-              onChange={(e) => handleChange(e)}
-              required
-            />
-          </label>
-        </div> */}
           <div className="mb-3">
             <label className="text-sm">
               Email

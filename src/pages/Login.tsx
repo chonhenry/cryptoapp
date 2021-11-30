@@ -85,12 +85,6 @@ const Login: React.FC = () => {
             >
               Don't have an account?
             </Link>
-            <button
-              className="bg-green_hover text-white font-bold text-xs py-2 px-8 mt-8 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-            >
-              Demo Sign In
-            </button>
           </div>
         </form>
       )}

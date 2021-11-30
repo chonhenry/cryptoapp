@@ -1,3 +1,4 @@
+import React from "react";
 import { firebaseAuth as auth } from "./config";
 import { User } from "../state/slices/userSlice";
 
@@ -20,10 +21,9 @@ const signoutUser = () => {
 };
 
 const subscribeToAuthChanges = (
-  handleAuthChange: (user: User | null) => void
-): boolean => {
-  let authUser;
-
+  handleAuthChange: (user: User | null) => void,
+  setIsAuth: React.Dispatch<boolean | undefined>
+) => {
   auth.onAuthStateChanged((user) => {
     let stateUser: User | null = null;
 
@@ -38,11 +38,9 @@ const subscribeToAuthChanges = (
 
     handleAuthChange(stateUser);
 
-    authUser = stateUser;
+    if (!stateUser) setIsAuth(false);
+    else setIsAuth(true);
   });
-  if (!authUser) return false;
-
-  return true;
 };
 
 const checkLogin = () => {

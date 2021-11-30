@@ -12,7 +12,6 @@ import Portfolio from "./pages/Portfolio";
 import History from "./pages/History";
 import PrivateRoute from "./components/PrivateRoute";
 import { subscribeToAuthChanges } from "./firebase/FirebaseAuthService";
-import { checkLogin } from "./firebase/FirebaseAuthService";
 import { useDispatch } from "react-redux";
 import { setUser } from "./state/slices/userSlice";
 import { getCryptos } from "./state/slices/cryptosSlice";
@@ -24,7 +23,7 @@ function App() {
   const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
-    setIsAuth(subscribeToAuthChanges((user) => dispatch(setUser(user))));
+    subscribeToAuthChanges((user) => dispatch(setUser(user)), setIsAuth);
     dispatch(getCryptos());
   }, [dispatch]);
 
